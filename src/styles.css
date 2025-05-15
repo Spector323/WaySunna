@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=Swap");
+body {
+  margin: 0;
+  font-family: "Lexend", sans-serif;
+}
+
+:root {
+  --floral-logo: #e91e63;
+  --floral-background: #f8bbd0;
+  --woody-logo: #4caf50;
+  --woody-background: #c8e6c9;
+  --citrus-logo: #ff9800;
+  --citrus-background: #ffe0b2;
+}
