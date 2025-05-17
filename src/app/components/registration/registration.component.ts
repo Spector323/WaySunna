@@ -14,8 +14,7 @@ import { CommonModule } from "@angular/common";
 })
 export class RegistrationComponent {
   name: string = "";
-  userName: string = "";
-  userAge: number | null = null;
+
   userEmail: string = "";
   userPassword: string = "";
   userCheckPassword: string = "";
@@ -41,19 +40,18 @@ export class RegistrationComponent {
 
     if (
       !this.name ||
-      !this.userName ||
       !this.userEmail ||
-      !this.userAge ||
+      // !this.userAge ||
       !this.userPassword ||
       !this.userCheckPassword
     ) {
       this.errorValid = "Пожалуйста, заполните все поля корректно";
       return;
     }
-    if (this.userAge <= 0) {
-      this.errorValid = "Возраст должен быть положительным числом";
-      return;
-    }
+    // if (this.userAge <= 0) {
+    //   this.errorValid = "Возраст должен быть положительным числом";
+    //   return;
+    // }
     if (this.userPassword !== this.userCheckPassword) {
       this.errorPassword = "Пароли должны совпадать";
       return;
@@ -67,8 +65,8 @@ export class RegistrationComponent {
 
     const formData = new FormData();
     formData.append("name", this.name);
-    formData.append("username", this.userName);
-    formData.append("age", this.userAge.toString());
+
+    // formData.append("age", this.userAge.toString());
     formData.append("email", this.userEmail);
     formData.append("password", this.userPassword);
 
