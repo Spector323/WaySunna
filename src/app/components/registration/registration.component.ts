@@ -92,24 +92,24 @@ export class RegistrationComponent {
       });
   }
 
-  onfileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
+  // onfileSelected(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files[0]) {
+  //     const file = input.files[0];
 
-      const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-      if (!allowedTypes.includes(file.type)) {
-        this.error = "Допустимы только изоображения JPEG , JPG или PNG";
-        return;
-      }
+  //     const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+  //     if (!allowedTypes.includes(file.type)) {
+  //       this.error = "Допустимы только изоображения JPEG , JPG или PNG";
+  //       return;
+  //     }
 
-      if (file.size > 2 * 1024 * 1024) {
-        this.error = "Размер файла не должен привышать 2МБ";
-        return;
-      }
+  //     if (file.size > 2 * 1024 * 1024) {
+  //       this.error = "Размер файла не должен привышать 2МБ";
+  //       return;
+  //     }
 
-      this.userAvatar = file;
-      this.error = " ";
-    }
-  }
+  //     this.userAvatar = file;
+  //     this.error = " ";
+  //   }
+  // }
 }

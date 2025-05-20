@@ -1,59 +1,125 @@
-<!-- Кнопка: Добавить товар -->
-<button *ngIf="isAdmin" class="btn-admin-add" (click)="openAddModal()">➕ Добавить товар</button>
-
-<!-- Модалка -->
-<div class="modal-overlay" *ngIf="modalVisible" (click)="closeModal()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <h2>{{ selectedProduct ? 'Редактировать товар' : 'Добавить товар' }}</h2>
-
-    <div class="form-group">
-      <label>Название</label>
-      <input [(ngModel)]="selectedProduct?.name" *ngIf="selectedProduct" />
-      <input [(ngModel)]="selectedProduct?.name" *ngIf="!selectedProduct" />
+<!-- 🖼️ СЛАЙДЕР -->
+<div class="slider-industrial">
+  <div class="slides">
+    <div class="slide">
+      <video src="assets/slider1.mp4" autoplay muted loop playsinline></video>
+      <div class="slide-content">
+        <h2>Добро пожаловать</h2>
+        <p>Открой для себя лучшие ароматы</p>
+        <a href="#" class="btn">Смотреть</a>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label>Описание</label>
-      <textarea [(ngModel)]="selectedProduct?.description"></textarea>
+    <div class="slide slide2">
+      <div class="slide-content">
+        <h2>Летние ароматы</h2>
+        <p>Новая коллекция уже доступна</p>
+        <a href="#" class="btn">Подробнее</a>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label>Цена</label>
-      <input type="number" [(ngModel)]="selectedProduct?.price" />
+    <div class="slide slide3">
+      <div class="slide-content">
+        <h2>Бестселлеры</h2>
+        <p>Выбор наших клиентов</p>
+        <a href="#" class="btn">Купить</a>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label>Ссылка на изображение</label>
-      <input [(ngModel)]="selectedProduct?.image" />
-    </div>
-
-    <button (click)="saveProduct(selectedProduct)">Сохранить</button>
-    <button (click)="closeModal()">Отмена</button>
   </div>
 </div>
 
-<!-- Поиск -->
-<div class="search">
-  <input type="text" (input)="search($event)" placeholder="🔍 Поиск..." />
+<!-- 🔍 ПОИСК -->
+<div class="main">
+  <div class="search-bar">
+    <input type="text" (input)="search($event)" placeholder="Поиск..." />
+    <button *ngIf="isAdmin" class="btn-admin-add" (click)="openAddModal()">Добавить товар</button>
+  </div>
 </div>
 
-<!-- Карточки -->
-<div class="products">
-  <div *ngFor="let product of filterProducts" class="card">
-    <div class="img-card">
-      <img [src]="'http://localhost:5000/' + product.image" />
-    </div>
-    <div class="card-info">
-      <p class="card-title">{{ product.name }}</p>
-      <p class="card-description">{{ product.description }}</p>
-      <p class="card-price">₽{{ product.price }}</p>
-      <button (click)="addProductBasket(product)">🛒 В корзину</button>
-
-      <!-- Админ-кнопки -->
+<!-- 🎯 АКЦИИ -->
+<div class="main">
+  <h2 class="section-title">🔥 Акции</h2>
+  <div class="promotion-cards product-grid">
+    <div class="card" *ngFor="let product of promoProducts">
+      <img [src]="product.image" alt="Product Image" />
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+      <p>
+        <span class="price">{{ product.price }}₽</span>
+        <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice }}₽</span>
+      </p>
+      <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">Добавить в корзину</button>
       <div *ngIf="isAdmin" class="admin-actions">
-        <button (click)="editProduct(product)" class="edit-btn">✏️</button>
-        <button (click)="deleteProduct(product._id)" class="delete-btn">❌</button>
+        <button class="edit-btn" (click)="editProduct(product)">✏️</button>
+        <button class="delete-btn" (click)="deleteProduct(product._id)">🗑️</button>
+        <button class="edit-btn" (click)="openAddModal()">➕</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🛍️ КАТАЛОГ -->
+<div class="main">
+  <h2 class="section-title">🧴 Каталог</h2>
+  <div class="product-list product-grid">
+    <div class="card product" *ngFor="let product of filterProducts">
+      <img [src]="product.image" alt="Product Image" />
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+      <p class="price">{{ product.price }}₽</p>
+      <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">Добавить в корзину</button>
+      <div *ngIf="isAdmin" class="admin-actions">
+        <button class="edit-btn" (click)="editProduct(product)">✏️</button>
+        <button class="delete-btn" (click)="deleteProduct(product._id)">🗑️</button>
+        <button class="edit-btn" (click)="openAddModal()">➕</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🎁 СКИДКИ -->
+<div class="main">
+  <h2 class="section-title">🎁 Скидки</h2>
+  <div class="promotion-cards product-grid">
+    <div class="card" *ngFor="let product of discountProducts">
+      <img [src]="product.image" alt="Product Image" />
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+      <p>
+        <span class="price">{{ product.price }}₽</span>
+        <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice }}₽</span>
+      </p>
+      <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">Добавить в корзину</button>
+      <div *ngIf="isAdmin" class="admin-actions">
+        <button class="edit-btn" (click)="editProduct(product)">✏️</button>
+        <button class="delete-btn" (click)="deleteProduct(product._id)">🗑️</button>
+        <button class="edit-btn" (click)="openAddModal()">➕</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🛠️ МОДАЛЬНОЕ ОКНО -->
+<div *ngIf="modalVisible && selectedProduct" class="modal-overlay">
+  <div class="modal-content">
+    <h2>{{ selectedProduct._id ? 'Редактировать' : 'Добавить' }} товар</h2>
+    <div class="form-group">
+      <label>Изображение</label>
+      <input type="text" [(ngModel)]="selectedProduct.image" />
+    </div>
+    <div class="form-group">
+      <label>Название</label>
+      <input type="text" [(ngModel)]="selectedProduct.name" />
+    </div>
+    <div class="form-group">
+      <label>Описание</label>
+      <textarea [(ngModel)]="selectedProduct.description"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Цена</label>
+      <input type="number" [(ngModel)]="selectedProduct.price" />
+    </div>
+    <div class="modal-buttons">
+      <button class="btn" (click)="saveProduct(selectedProduct)">Сохранить</button>
+      <button class="btn" (click)="closeModal()">Отмена</button>
     </div>
   </div>
 </div>

@@ -12,6 +12,8 @@ export class RegistrationService {
   apiUrl =  "http://localhost:5000/auth"
   
   registerUser(formData: FormData) {
+    console.log("FormData:", formData);
+    
     return this.http.post(`${this.apiUrl}/registration`, formData);
   }
 }
