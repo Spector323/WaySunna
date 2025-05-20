@@ -1,125 +1,161 @@
-<!-- 🖼️ СЛАЙДЕР -->
 <div class="slider-industrial">
   <div class="slides">
-    <div class="slide">
-      <video src="assets/slider1.mp4" autoplay muted loop playsinline></video>
+    <!-- Слайд 1: Приветствие -->
+    <div class="slide" [ngClass]="{'active': currentSlide === 0}">
       <div class="slide-content">
         <h2>Добро пожаловать</h2>
-        <p>Открой для себя лучшие ароматы</p>
-        <a href="#" class="btn">Смотреть</a>
+        <p>Откройте мир изысканных ароматов</p>
+        <a href="#" class="btn">Исследовать коллекцию</a>
       </div>
     </div>
-    <div class="slide slide2">
+    <!-- Слайд 2: Видео -->
+    <div class="slide video-slide" [ngClass]="{'active': currentSlide === 1}">
+      <video #videoPlayer muted>
+        <source src="path/to/colorful-animation.mp4" type="video/mp4">
+      </video>
       <div class="slide-content">
-        <h2>Летние ароматы</h2>
-        <p>Новая коллекция уже доступна</p>
-        <a href="#" class="btn">Подробнее</a>
+        <h2>Взрыв эмоций</h2>
+        <p>Яркие ароматы для ярких моментов</p>
+        <a href="#" class="btn">Узнать больше</a>
       </div>
     </div>
-    <div class="slide slide3">
+    <!-- Слайд 3: Фото 1 -->
+    <div class="slide" [ngClass]="{'active': currentSlide === 2}" style="background-image: url('path/to/photo1.jpg');">
       <div class="slide-content">
-        <h2>Бестселлеры</h2>
-        <p>Выбор наших клиентов</p>
-        <a href="#" class="btn">Купить</a>
+        <h2>Элегантность</h2>
+        <p>Идеальный аромат для особых случаев</p>
+        <a href="#" class="btn">Выбрать аромат</a>
       </div>
+    </div>
+    <!-- Слайд 4: Фото 2 -->
+    <div class="slide" [ngClass]="{'active': currentSlide === 3}" style="background-image: url('path/to/photo2.jpg');">
+      <div class="slide-content">
+        <h2>Свобода</h2>
+        <p>Ароматы, вдохновляющие на приключения</p>
+        <a href="#" class="btn">Открыть новинки</a>
+      </div>
+    </div>
+  </div>
+  <!-- Кнопки навигации -->
+  <div class="slider-nav">
+    <button class="nav-btn prev-btn" (click)="prevSlide()" [disabled]="currentSlide === 0">❮</button>
+    <button class="nav-btn next-btn" (click)="nextSlide()" [disabled]="currentSlide === 3">❯</button>
+  </div>
+  <!-- Индикаторы -->
+  <div class="slider-indicators">
+    <span class="indicator" [ngClass]="{'active': currentSlide === 0}" (click)="goToSlide(0)"></span>
+    <span class="indicator" [ngClass]="{'active': currentSlide === 1}" (click)="goToSlide(1)"></span>
+    <span class="indicator" [ngClass]="{'active': currentSlide === 2}" (click)="goToSlide(2)"></span>
+    <span class="indicator" [ngClass]="{'active': currentSlide === 3}" (click)="goToSlide(3)"></span>
+  </div>
+</div>
+
+<!-- === ПОИСК + КНОПКА ДОБАВИТЬ === -->
+<div class="search-bar main">
+  <input type="text" (input)="search($event)" placeholder="Поиск..." />
+  <button *ngIf="isAdmin" class="btn-admin-add" (click)="openAddModal()">Добавить товар</button>
+</div>
+
+<!-- === АКЦИИ === -->
+<h2 class="section-title">Акции</h2>
+<div class="promotion-cards main">
+  <div class="card" *ngFor="let product of filterProducts">
+    <div class="card-header">
+      <button *ngIf="isAdmin" class="delete-btn" (click)="deleteProduct(product._id)">✖</button>
+    </div>
+    <img [src]="product.image" alt="Product Image" />
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p class="price">{{ product.price }}₽</p>
+
+    <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">
+      Добавить в корзину
+    </button>
+
+    <div *ngIf="isAdmin" class="admin-actions">
+      <button (click)="editProduct(product)">Редактировать</button>
+      <button (click)="deleteProduct(product._id)">Удалить</button>
     </div>
   </div>
 </div>
 
-<!-- 🔍 ПОИСК -->
-<div class="main">
-  <div class="search-bar">
-    <input type="text" (input)="search($event)" placeholder="Поиск..." />
-    <button *ngIf="isAdmin" class="btn-admin-add" (click)="openAddModal()">Добавить товар</button>
-  </div>
-</div>
+<!-- === КАТАЛОГ === -->
+<h2 class="section-title">Каталог</h2>
+<div class="product-grid main">
+  <div class="card" *ngFor="let product of filterProducts">
+    <div class="card-header">
+      <button *ngIf="isAdmin" class="delete-btn" (click)="deleteProduct(product._id)">✖</button>
+    </div>
+    <img [src]="product.image" alt="Product Image" />
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p class="price">{{ product.price }}₽</p>
 
-<!-- 🎯 АКЦИИ -->
-<div class="main">
-  <h2 class="section-title">🔥 Акции</h2>
-  <div class="promotion-cards product-grid">
-    <div class="card" *ngFor="let product of promoProducts">
-      <img [src]="product.image" alt="Product Image" />
-      <h3>{{ product.name }}</h3>
-      <p>{{ product.description }}</p>
-      <p>
-        <span class="price">{{ product.price }}₽</span>
-        <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice }}₽</span>
-      </p>
-      <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">Добавить в корзину</button>
-      <div *ngIf="isAdmin" class="admin-actions">
-        <button class="edit-btn" (click)="editProduct(product)">✏️</button>
-        <button class="delete-btn" (click)="deleteProduct(product._id)">🗑️</button>
-        <button class="edit-btn" (click)="openAddModal()">➕</button>
-      </div>
+    <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">
+      Добавить в корзину
+    </button>
+
+    <div *ngIf="isAdmin" class="admin-actions">
+      <button (click)="editProduct(product)">Редактировать</button>
+      <button (click)="deleteProduct(product._id)">Удалить</button>
     </div>
   </div>
 </div>
 
-<!-- 🛍️ КАТАЛОГ -->
-<div class="main">
-  <h2 class="section-title">🧴 Каталог</h2>
-  <div class="product-list product-grid">
-    <div class="card product" *ngFor="let product of filterProducts">
-      <img [src]="product.image" alt="Product Image" />
-      <h3>{{ product.name }}</h3>
-      <p>{{ product.description }}</p>
-      <p class="price">{{ product.price }}₽</p>
-      <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">Добавить в корзину</button>
-      <div *ngIf="isAdmin" class="admin-actions">
-        <button class="edit-btn" (click)="editProduct(product)">✏️</button>
-        <button class="delete-btn" (click)="deleteProduct(product._id)">🗑️</button>
-        <button class="edit-btn" (click)="openAddModal()">➕</button>
-      </div>
+<!-- === СКИДКИ === -->
+<h2 class="section-title">Скидки</h2>
+<div class="product-grid main">
+  <div class="card" *ngFor="let product of filterProducts">
+    <div class="card-header">
+      <button *ngIf="isAdmin" class="delete-btn" (click)="deleteProduct(product._id)">✖</button>
+    </div>
+    <img [src]="product.image" alt="Product Image" />
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p class="price">
+      {{ product.price - 500 }}₽
+      <span class="old-price">{{ product.price }}₽</span>
+    </p>
+
+    <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">
+      Добавить в корзину
+    </button>
+
+    <div *ngIf="isAdmin" class="admin-actions">
+      <button (click)="editProduct(product)">Редактировать</button>
+      <button (click)="deleteProduct(product._id)">Удалить</button>
     </div>
   </div>
 </div>
 
-<!-- 🎁 СКИДКИ -->
-<div class="main">
-  <h2 class="section-title">🎁 Скидки</h2>
-  <div class="promotion-cards product-grid">
-    <div class="card" *ngFor="let product of discountProducts">
-      <img [src]="product.image" alt="Product Image" />
-      <h3>{{ product.name }}</h3>
-      <p>{{ product.description }}</p>
-      <p>
-        <span class="price">{{ product.price }}₽</span>
-        <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice }}₽</span>
-      </p>
-      <button *ngIf="!addCart[product._id]" (click)="addProductBasket(product)">Добавить в корзину</button>
-      <div *ngIf="isAdmin" class="admin-actions">
-        <button class="edit-btn" (click)="editProduct(product)">✏️</button>
-        <button class="delete-btn" (click)="deleteProduct(product._id)">🗑️</button>
-        <button class="edit-btn" (click)="openAddModal()">➕</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 🛠️ МОДАЛЬНОЕ ОКНО -->
+<!-- === МОДАЛЬНОЕ ОКНО === -->
 <div *ngIf="modalVisible && selectedProduct" class="modal-overlay">
   <div class="modal-content">
     <h2>{{ selectedProduct._id ? 'Редактировать' : 'Добавить' }} товар</h2>
+
     <div class="form-group">
       <label>Изображение</label>
       <input type="text" [(ngModel)]="selectedProduct.image" />
     </div>
+
     <div class="form-group">
       <label>Название</label>
       <input type="text" [(ngModel)]="selectedProduct.name" />
     </div>
+
     <div class="form-group">
       <label>Описание</label>
       <textarea [(ngModel)]="selectedProduct.description"></textarea>
     </div>
+
     <div class="form-group">
       <label>Цена</label>
       <input type="number" [(ngModel)]="selectedProduct.price" />
     </div>
+
     <div class="modal-buttons">
-      <button class="btn" (click)="saveProduct(selectedProduct)">Сохранить</button>
-      <button class="btn" (click)="closeModal()">Отмена</button>
+      <button (click)="saveProduct(selectedProduct)">Сохранить</button>
+      <button (click)="closeModal()">Отмена</button>
     </div>
   </div>
 </div>

@@ -24,30 +24,53 @@
 }
 
 /* === Слайдер === */
+/* === Слайдер === */
 .slider-industrial {
   position: relative;
   overflow: hidden;
   width: 100%;
+  max-width: 1600px;
   margin: 2rem auto;
-  border-radius: 15px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #1a2a44, #2c3e50);
 }
 
 .slides {
   display: flex;
-  animation: slide 25s infinite ease-in-out;
+  width: 400%; /* 4 слайда: приветствие, видео, 2 фото */
+  height: 700px; /* Увеличил высоту для премиального вида */
+  position: relative;
 }
 
 .slide {
-  min-width: 100%;
-  height: 650px;
+  width: 25%; /* 100% / 4 слайда */
+  height: 100%;
   background-size: cover;
   background-position: center;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.5s ease;
+  opacity: 0;
+  transition: opacity 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+  z-index: 1; /* Затемнение для контраста текста */
 }
 
 .slide video {
@@ -57,49 +80,165 @@
   object-fit: cover;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 0;
+  filter: brightness(0.9) contrast(1.15);
+  animation: videoFade 10s ease-in-out forwards;
 }
 
 .slide-content {
   text-align: center;
-  color: rgb(70, 64, 64);
-  padding: 2rem;
+  color: #fff;
+  padding: 3rem;
   z-index: 2;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUp 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  max-width: 800px;
 }
 
-.slide h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.slide p {
-  font-size: 1.2rem;
+.slide-content h2 {
+  font-size: 4rem;
+  font-weight: 900;
   margin-bottom: 1.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  letter-spacing: 1.5px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.slide-content p {
+  font-size: 1.8rem;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+  font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .btn {
-  background-color: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #0fe995, #5cc6d0);
   color: white;
-  padding: 12px 24px;
-  border-radius: 30px;
+  padding: 16px 36px;
+  border-radius: 50px;
   text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .btn:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(15, 233, 149, 0.5);
+  background: linear-gradient(135deg, #03c983, #2eafc7);
 }
 
-@keyframes slide {
-  0%   { transform: translateX(0); }
-  20%  { transform: translateX(-100%); }
-  40%  { transform: translateX(-200%); }
-  60%  { transform: translateX(-300%); }
-  80%  { transform: translateX(-400%); }
-  100% { transform: translateX(0); }
+/* Анимация появления текста */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Анимация видео */
+@keyframes videoFade {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Боковые кнопки */
+.slider-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider-industrial:hover .slider-nav {
+  opacity: 1;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(15, 233, 149, 0.9), rgba(92, 198, 208, 0.9));
+  border: none;
+  color: white;
+  font-size: 2.2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.nav-btn:hover {
+  background: linear-gradient(135deg, #0fe995, #5cc6d0);
+  transform: scale(1.2) rotate(5deg);
+  box-shadow: 0 10px 25px rgba(15, 233, 149, 0.6);
+}
+
+/* Индикаторы слайдов */
+.slider-indicators {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  z-index: 3;
+}
+
+.indicator {
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.indicator.active {
+  border-color: #0fe995;
+}
+
+.indicator.active::before {
+  background: #0fe995;
+  transform: translate(-50%, -50%) scale(1.6);
+  box-shadow: 0 0 15px rgba(15, 233, 149, 0.9);
+}
+
+/* Отключаем анимацию для неактивных слайдов */
+.slide:not(.active) .slide-content {
+  animation: none;
+  opacity: 0;
 }
 
 /* === Поиск === */
