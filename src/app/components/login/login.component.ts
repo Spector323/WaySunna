@@ -14,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponent {
-  name: string = "";
+  fullname: string = "";
   userPassword: string = "";
   error: string = "";
   isSubmitting: boolean = false;
@@ -28,7 +28,7 @@ export class LoginComponent {
   login() {
     this.error = "";
     
-    if (!this.name || !this.userPassword) {
+    if (!this.fullname || !this.userPassword) {
       this.error = "Пожалуйста, заполните все поля";
       return;
     }
@@ -36,7 +36,7 @@ export class LoginComponent {
     this.isSubmitting = true;
 
     const credentials = {
-      name: this.name,
+      fullname: this.fullname,
       password: this.userPassword
     };
 

@@ -13,7 +13,7 @@ import { CommonModule } from "@angular/common";
   styleUrls: ["./registration.component.css"],
 })
 export class RegistrationComponent {
-  name: string = "";
+  fullname: string = "";
 
   userEmail: string = "";
   userPassword: string = "";
@@ -39,7 +39,7 @@ export class RegistrationComponent {
     this.error = "";
 
     if (
-      !this.name ||
+      !this.fullname ||
       !this.userEmail ||
       // !this.userAge ||
       !this.userPassword ||
@@ -64,7 +64,7 @@ export class RegistrationComponent {
     this.isSubmitting = true;
 
     const formData = new FormData();
-    formData.append("name", this.name);
+    formData.append("fullname", this.fullname);
 
     // formData.append("age", this.userAge.toString());
     formData.append("email", this.userEmail);
