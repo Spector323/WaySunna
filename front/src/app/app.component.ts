@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoginService } from './service/login.service';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
 
 interface User {
   avatar?: string;
@@ -10,7 +11,7 @@ interface User {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, NgxSonnerToaster],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private loginService: LoginService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadUserProfile();
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
           this.user = user || null;
         },
         error: (error) => {
-          console.error('Ошибка загрузки профиля:', error);
+          toast.error('Ошибка загрузки профиля:', error);
           this.user = null;
         }
       });
@@ -49,7 +50,7 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('token');
     this.user = null;
     this.router.navigate(['/login']);
-    alert('Вы вышли из аккаунта');
+    toast.warning('Вы вышли из аккаунта');
   }
 
   isVideo(avatar?: string): boolean {

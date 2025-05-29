@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductServiceService } from '../../service/product-service.service';
 import { Product } from '../../models/product.model';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule,NgxSonnerToaster],
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.css']
 })
@@ -36,7 +37,7 @@ export class FavoritesComponent implements OnInit {
           this.favorites = [];
         }
       } else {
-        alert('Войдите в аккаунт, чтобы просмотреть избранное');
+        toast.info('Войдите в аккаунт, чтобы просмотреть избранное');
       }
     } catch (e) {
       console.error('Ошибка загрузки избранного:', e);
@@ -47,7 +48,7 @@ export class FavoritesComponent implements OnInit {
   toggleFavorite(product: Product) {
     const token = localStorage.getItem('token') || '';
     if (!token) {
-      alert('Войдите в аккаунт, чтобы удалить из избранного');
+      toast.error('Войдите в аккаунт, чтобы удалить из избранного');
       return;
     }
 
@@ -55,11 +56,11 @@ export class FavoritesComponent implements OnInit {
       next: () => {
         this.favorites = this.favorites.filter(p => p._id !== product._id);
         this.favoriteStatus[product._id] = false;
-        alert('Товар удален из избранного');
+        toast.error('Товар удален из избранного');
       },
       error: (error) => {
         console.error('Ошибка удаления из избранного:', error);
-        alert('Ошибка: ' + (error.error?.message || 'Не удалось удалить из избранного'));
+        toast.error('Ошибка: ' + (error.error?.message || 'Не удалось удалить из избранного'));
       }
     });
   }

@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ProductServiceService } from '../../service/product-service.service'; // Обновите импорт
-import { Product } from '../../models/product.model';
 import { Basket, BasketItem } from '../../service/product-service.service';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-basket',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NgxSonnerToaster],
   templateUrl: './basket.component.html',
   styleUrls: ['./basket.component.css']
 })
@@ -17,7 +17,7 @@ export class BasketComponent implements OnInit {
   basket: Basket | null = null;
   totalPrice: number = 0;
 
-  constructor(private productService: ProductServiceService) {}
+  constructor(private productService: ProductServiceService) { }
 
   ngOnInit() {
     this.loadBasket();
@@ -38,7 +38,7 @@ export class BasketComponent implements OnInit {
         this.basket = basket || null;
         this.calculateTotalPrice();
       } else {
-        alert('Войдите в аккаунт, чтобы просмотреть корзину');
+        toast.info('Войдите в аккаунт, чтобы просмотреть корзину');
       }
     } catch (error) {
       console.error('Ошибка загрузки корзины:', error);
@@ -57,7 +57,7 @@ export class BasketComponent implements OnInit {
       this.totalPrice = 0;
     }
   }
-  
+
   async updateQuantity(productId: string, quantity: number) {
     try {
       const token = localStorage.getItem('token') || '';

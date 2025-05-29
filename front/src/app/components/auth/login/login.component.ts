@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../../service/login.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NgxSonnerToaster],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -21,7 +22,7 @@ export class LoginComponent {
   constructor(
     private loginService: LoginService,
     private router: Router
-  ) {}
+  ) { }
 
   login() {
     this.error = '';
@@ -38,6 +39,7 @@ export class LoginComponent {
       next: (res: any) => {
         this.isSubmitting = false;
         this.showSuccessMessage = true;
+        toast.success('Вход выполнен успешно!');
         localStorage.setItem('token', res.token);
         setTimeout(() => {
           this.router.navigate(['/profile']); // Изменено: '/' → '/profile'
@@ -46,7 +48,7 @@ export class LoginComponent {
       error: (e: any) => {
         this.isSubmitting = false;
         this.error = e.error?.message || 'Неверный логин или пароль';
-        console.error('Ошибка входа:', e);
+        toast.error('Ошибка входа:', e);
       }
     });
   }

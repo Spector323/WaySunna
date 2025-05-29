@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../service/login.service';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
 
 interface User {
   _id: string;
@@ -16,7 +17,7 @@ interface User {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NgxSonnerToaster],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -117,7 +118,7 @@ export class ProfileComponent implements OnInit {
         if (!user) {
           this.error = 'Ошибка обновления профиля';
         } else {
-          alert('Профиль обновлён');
+          toast.success('Профиль обновлён');
         }
       },
       error: (error) => {
@@ -160,7 +161,7 @@ export class ProfileComponent implements OnInit {
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
-    alert('Вы вышли из аккаунта');
+    toast.warning('Вы вышли из аккаунта');
   }
 
   isVideo(avatar: string | undefined): boolean {
