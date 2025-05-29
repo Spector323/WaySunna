@@ -1,0 +1,37 @@
+<form class="user-form">
+    <h2>Логин</h2>
+    
+    <div class="success-message" *ngIf="showSuccessMessage">
+      Вход выполнен успешно!
+    </div>
+  
+    <label for="name">name:</label>
+    <input
+      type="text"
+      id="name"
+      [(ngModel)]="name"
+      placeholder="Введите name"
+      class="form-input"
+      [ngModelOptions]="{standalone: true}"
+    />
+  
+    <label for="userPassword">Пароль:</label>
+    <input 
+      type="password" 
+      id="userPassword"
+      [(ngModel)]="userPassword" 
+      placeholder="Введите пароль"
+      class="form-input"
+      [ngModelOptions]="{standalone: true}"
+    />
+    
+    <p class="error-message">{{ error }}</p>
+  
+    <button
+      (click)="login()"
+      class="submit-button"
+      [disabled]="isSubmitting"
+    >
+      {{ isSubmitting ? 'Загрузка...' : 'Войти' }}
+    </button>
+  </form>

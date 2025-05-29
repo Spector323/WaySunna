@@ -1,0 +1,25 @@
+<h2 class="section-title">Избранное</h2>
+<div class="product-grid main" *ngIf="favorites.length; else emptyFavorites">
+    <div class="card" *ngFor="let product of favorites">
+        <div class="card-header">
+            <button class="favorite-btn" (click)="toggleFavorite(product)">
+                <mat-icon>{{ favoriteStatus[product._id] ? 'favorite' : 'favorite_border' }}</mat-icon>
+            </button>
+        </div>
+        <img [src]="product.image ? 'http://localhost:5000/' + product.image : 'assets/placeholder.jpg'"
+            alt="Product Image" />
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p class="price">{{ product.price }}₽</p>
+
+        <!-- ... остальной код ... -->
+        <button class="cart-btn" (click)="addProductBasket(product)">
+            Добавить в корзину
+        </button>
+        <!-- ... -->
+    </div>
+</div>
+
+<ng-template #emptyFavorites>
+    <p class="empty-message">В избранном пока нет товаров</p>
+</ng-template>

@@ -1,0 +1,118 @@
+/* app.component.css */
+
+.main {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.cn-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color:  #0c6b3f;
+  text-decoration: none;
+}
+
+.title {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.title a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.title a:hover,
+.title a.active {
+  color: #13b368;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.navbar a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar a:hover {
+  color: #0056b3;
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-avatar {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #007bff;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+
+
+.avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 50%;
+  border: 2px solid #007bff;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.avatar-placeholder:hover {
+  border-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.logout-link {
+  cursor: pointer;
+  color: #111;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.logout-link:hover {
+  color: #c82333;
+}

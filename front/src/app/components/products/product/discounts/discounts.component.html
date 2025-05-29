@@ -1,0 +1,55 @@
+<h2 class="section-title">Скидки</h2>
+<div class="promotion-cards main">
+  <div class="card" *ngFor="let product of filterProducts">
+    <div class="card-header">
+      <button class="delete-btn" (click)="deleteProduct(product._id)" *ngIf="isAdmin">✖</button>
+      <button class="favorite-btn" (click)="toggleFavorite(product)">
+        <mat-icon>{{ favorites[product._id] ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </button>
+    </div>
+    <img [src]="product.image ? 'http://localhost:5000/' + product.image : 'assets/placeholder.jpg'"
+         alt="Product Image" />
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p class="price">
+      {{ product.price - 500 }}₽
+      <span class="old-price">{{ product.price }}₽</span>
+    </p>
+    <button class="cart-btn" (click)="addProductBasket(product)">Добавить в корзину</button>
+    <div class="admin-actions" *ngIf="isAdmin">
+      <button (click)="editProduct(product)">Редактировать</button>
+      <button (click)="deleteProduct(product._id)">Удалить</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-actions" *ngIf="isAdmin">
+  <button class="btn-admin-add" (click)="addProduct()">Добавить товар</button>
+</div>
+
+<!-- Модальное окно -->
+<div *ngIf="modalVisible && selectedProduct" class="modal-overlay">
+  <div class="modal-content">
+    <h2>{{ selectedProduct._id ? 'Редактировать' : 'Добавить' }} товар</h2>
+    <div class="form-group">
+      <label>Изображение</label>
+      <input type="file" id="productImage" (change)="onFileChange($event)" />
+    </div>
+    <div class="form-group">
+      <label>Название</label>
+      <input type="text" [(ngModel)]="selectedProduct.name" />
+    </div>
+    <div class="form-group">
+      <label>Описание</label>
+      <textarea [(ngModel)]="selectedProduct.description"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Цена</label>
+      <input type="number" [(ngModel)]="selectedProduct.price" />
+    </div>
+    <div class="modal-buttons">
+      <button (click)="saveProduct()">Сохранить</button>
+      <button (click)="closeModal()">Отмена</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="product-detail" *ngIf="product">
+  <a routerLink="/catalog" class="back-btn">← Назад</a>
+  <h2>{{ product.name }}</h2>
+  <img [src]="product.image ? 'http://localhost:5000/' + product.image : 'assets/placeholder.jpg'" 
+       alt="{{ product.name }}" class="product-image" />
+  <p>{{ product.description }}</p>
+  <p class="price">
+    <span *ngIf="product.type === 'discount'" class="discounted-price">
+      {{ product.price - 500 }}₽
+      <span class="old-price">{{ product.price }}₽</span>
+    </span>
+    <span *ngIf="product.type !== 'discount'">{{ product.price }}₽</span>
+  </p>
+  <button class="cart-btn" (click)="addToBasket()">Добавить в корзину</button>
+</div>
+<div *ngIf="!product" class="not-found">Товар не найден</div>

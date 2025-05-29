@@ -1,0 +1,13 @@
+<div class="home">
+  <app-slider></app-slider>
+
+  <!-- === ПОИСК === -->
+  <div class="search-bar main">
+    <input type="text" (input)="search($event)" placeholder="Поиск..." />
+  </div>
+
+  <app-promotions></app-promotions>
+  <app-catalog></app-catalog>
+  <app-discounts></app-discounts>
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,38 @@
+<div class="basket">
+  <h2 class="section-title">Ваша корзина</h2>
+  
+  <div *ngIf="!basket || basket.products.length === 0" class="empty-basket">
+    Корзина пуста
+  </div>
+
+  <ul *ngIf="basket && basket.products.length > 0" class="basket-items">
+    <li *ngFor="let item of basket.products" class="basket-item">
+      <a [routerLink]="['/product', getProductId(item.productId._id)]">
+        <img [src]="item.productId.image ? 'http://localhost:5000/' + item.productId.image : 'assets/placeholder.jpg'" 
+             alt="{{ item.productId.name }}" class="product-image" />
+      </a>
+      <div class="product-info">
+        <h3>
+          <a [routerLink]="['/product', getProductId(item.productId._id)]">{{ item.productId.name }}</a>
+        </h3>
+        <p>{{ item.productId.description }}</p>
+        <p class="price">
+          <span *ngIf="item.productId.type === 'discount'" class="discounted-price">
+            {{ item.productId.price - 500 }}₽
+            <span class="old-price">{{ item.productId.price }}₽</span>
+          </span>
+          <span *ngIf="item.productId.type !== 'discount'">{{ item.productId.price }}₽</span>
+          x {{ item.quantity }} = 
+          {{ (item.productId.type === 'discount' ? item.productId.price - 500 : item.productId.price) * item.quantity }}₽
+        </p>
+        <label for="quantity-{{ getProductId(item.productId._id) }}" class="visually-hidden">Количество</label>
+        <input type="number" id="quantity-{{ getProductId(item.productId._id) }}" [(ngModel)]="item.quantity" min="1" 
+               (change)="updateQuantity(getProductId(item.productId._id), item.quantity)" />
+        <button class="remove-btn" (click)="removeFromBasket(getProductId(item.productId._id))">Удалить</button>
+      </div>
+    </li>
+  </ul>
+
+  <h3 *ngIf="basket && basket.products.length > 0" class="total">Итого: {{ totalPrice }}₽</h3>
+  <button *ngIf="basket && basket.products.length > 0" class="clear-btn" (click)="clearBasket()">Очистить корзину</button>
+</div>
