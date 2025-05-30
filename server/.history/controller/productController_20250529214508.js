@@ -56,46 +56,26 @@ class productController {
 }
 
   async changeProduct(req, res) {
-  try {
-    const { id } = req.params;
-    const { name, price, description, type } = req.body;
+    try {
+      const { id } = req.params;
+      const { name, price, description, type } = req.body;
+      let updateData = { name, price: parseFloat(price), description, type };
 
-    // Конвертируем строку в число
-    const newPrice = parseFloat(price);
+      if (req.file) {
+        updateData.image = req.file.path; // Используем req.file
+      }
 
-    // Ищем текущий товар
-    const product = await Product.findById(id);
-    if (!product) {
-      return res.status(404).json({ message: "Товар не найден" });
+      const product = await Product.findByIdAndUpdate(id, updateData, { new: true });
+      if (!product) {
+        return res.status(404).json({ message: "Товар не найден" });
+      }
+
+      return res.status(200).json({ message: "Товар успешно изменен", product });
+    } catch (e) {
+      console.error('Ошибка changeProduct:', e);
+      res.status(400).json({ message: "Ошибка при попытке изменить данные товара" });
     }
-
-    // Сохраняем старую цену, если она изменилась
-    let updateData = {
-      name,
-      price: newPrice,
-      description,
-      type
-    };
-
-    // Если цена изменилась — сохраняем предыдущую
-    if (product.price !== newPrice) {
-      updateData.oldPrice = product.price;
-    }
-
-    // Если загружено новое изображение
-    if (req.file) {
-      updateData.image = req.file.path;
-    }
-
-    // Обновляем товар
-    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true });
-    return res.status(200).json({ message: "Товар успешно изменён", product: updatedProduct });
-
-  } catch (e) {
-    console.error('Ошибка changeProduct:', e);
-    res.status(400).json({ message: "Ошибка при попытке изменить данные товара" });
   }
-}
 
   async deleteProduct(req, res) {
     try {

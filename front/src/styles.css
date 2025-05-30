@@ -45,7 +45,7 @@ input[type="number"]::-webkit-outer-spin-button {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
-  padding: 20px 40px;
+  padding: 20px 0px;
   justify-items: center;
 }
 
@@ -147,6 +147,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .admin-actions button {
   border: none;
+    display: none;
+
   border-radius: 8px;
   padding: 8px 14px;
   font-size: 0.9rem;
@@ -281,9 +283,14 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* === Адаптивность === */
 @media (max-width: 768px) {
-  .product-grid, .promotion-cards {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    padding: 20px 16px;
+  .home{
+    width: 740px;
+    margin: 0 auto;
+  }
+  .product-grid,
+  .promotion-cards {
+    height: 100%;
+    grid-template-columns: repeat(5, 1fr);
   }
 
   .card img {
@@ -291,10 +298,102 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 
   .section-title {
-    font-size: 1.8rem;
+    font-size: 12px;
   }
 
   .modal-content {
     padding: 20px;
+  }
+
+  .cart-btn {
+    padding: 5px 10px;
+    font-size: 8px;
+    margin: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid,
+  .promotion-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    padding: 20px 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product-grid::-webkit-scrollbar,
+  .promotion-cards::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .product-grid::-webkit-scrollbar-thumb,
+  .promotion-cards::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+
+  .card img {
+    height: 140px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin: 40px 0 16px;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    margin: 10px 0 6px;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
+
+  .price,
+  .old-price {
+    font-size: 1rem;
+  }
+
+  .cart-btn {
+    width: 100%;
+    max-width: 200px;
+    margin: 10px auto;
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .btn-admin-add,
+  .admin-actions button {
+    width: 100%;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .modal-content {
+    padding: 16px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .modal-buttons button {
+    font-size: 0.9rem;
+    padding: 8px 14px;
   }
 }

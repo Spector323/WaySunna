@@ -1,5 +1,4 @@
-/* app.component.css */
-
+/* === Основной контейнер === */
 .main {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f9f9f9;
@@ -8,25 +7,38 @@
   padding: 0;
 }
 
+/* === Шапка сайта === */
 .cn-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
+.cn-header:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* === Логотип === */
 .logo {
   font-size: 1.8rem;
   font-weight: bold;
-  color:  #0c6b3f;
+  color: #0c6b3f;
   text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+.logo:hover {
+  color: #0a5830;
 }
 
+/* === Навигационное меню === */
 .title {
   display: flex;
   gap: 2rem;
@@ -38,6 +50,23 @@
   color: #333;
   font-weight: 500;
   transition: color 0.3s ease;
+  position: relative;
+}
+
+.title a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #13b368;
+  transition: width 0.3s ease;
+}
+
+.title a:hover::after,
+.title a.active::after {
+  width: 100%;
 }
 
 .title a:hover,
@@ -45,74 +74,127 @@
   color: #13b368;
 }
 
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.navbar a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #007bff;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.navbar a:hover {
-  color: #0056b3;
-}
-
+/* === Блок авторизации и профиль === */
 .auth-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
 }
 
 .profile-avatar {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+.profile-avatar:hover {
+  transform: scale(1.1);
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #007bff;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.avatar:hover {
+  border-color: #0056b3;
+  transform: scale(1.05);
 }
 
-
-
 .avatar-placeholder {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f0f0f0;
   border-radius: 50%;
   border: 2px solid #007bff;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.3s, transform 0.3s;
 }
-
+.avatar-placeholder svg {
+  transition: fill 0.3s;
+}
 .avatar-placeholder:hover {
   border-color: #0056b3;
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+.avatar-placeholder:hover svg {
+  fill: #0056b3;
 }
 
 .logout-link {
   cursor: pointer;
-  color: #111;
+  color: #333;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: color 0.3s;
 }
-
 .logout-link:hover {
   color: #c82333;
+}
+
+/* === Ссылки входа/регистрации === */
+.auth-section a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.auth-section a:hover {
+  color: #0056b3;
+}
+
+/* === Адаптивность для планшетов и телефонов === */
+@media (max-width: 768px) {
+  .cn-header {
+    max-width: 768px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .title {
+    gap: 1rem;
+  }
+
+  .auth-section {
+    width: 8%;
+    justify-content: center;
+  }
+
+  .title a {
+    font-size: 0.95rem;
+  }
+}
+
+/* === Очень маленькие экраны (мобильные телефоны) === */
+@media (max-width: 480px) {
+  .cn-header {
+    padding: 0.8rem;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+
+  .title {
+    gap: 1rem;
+  }
+
+  .title a {
+    font-size: 11px;
+    
+  }
+
+  .avatar,
+  .avatar-placeholder {
+    width: 25px;
+    height: 25px;
+  }
+  .logout-link{
+    display: none;
+  }
 }

@@ -5,7 +5,6 @@ const Product = new Schema({
   image: [{ type: String }],
   price: { type: Number, required: true },
   description: { type: String },
-  oldPrice: { type: Number },
   category: { type: String, },
   type: { type: String, enum: ['promotion', 'catalog', 'discount'], required: true }, // Добавляем поле type
   registrationDate: { type: Date, default: Date.now },

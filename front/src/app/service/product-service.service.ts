@@ -63,21 +63,29 @@ export class ProductServiceService { // TODO: Переименовать в Prod
   }
 
   editProduct(product: any, token: string, image?: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('name', product.name);
-    formData.append('price', product.price.toString());
-    formData.append('description', product.description);
-    formData.append('type', product.type);
-    if (image) {
-      formData.append('image', image);
-    }
+  const formData = new FormData();
+  formData.append('name', product.name);
+  formData.append('price', product.price.toString());
+  formData.append('description', product.description);
+  formData.append('type', product.type);
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.patch(`${this.apiUrl}/product/changeProduct/${this.getProductId(product._id)}`, formData, { headers }); // Обновляем ID
+  // Если цена изменилась, сохраняем предыдущее значение в oldPrice
+  if (product.previousPrice !== undefined && product.previousPrice !== product.price) {
+    formData.append('oldPrice', product.previousPrice.toString());
   }
+
+  if (image) {
+    formData.append('image', image);
+  }
+
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+
+  const cleanId = this.getProductId(product._id);
+
+  return this.http.patch(`${this.apiUrl}/product/changeProduct/${cleanId}`, formData, { headers });
+}
 
   deleteProduct(id: string, token: string): Observable<any> {
     const headers = new HttpHeaders({
