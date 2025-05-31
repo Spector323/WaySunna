@@ -10,7 +10,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { SliderComponent } from './components/products/product/slider/slider.component';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileComponent } from './components/auth/profile/profile.component';
 
 export const routes: Routes = [
   { path: 'promotions', component: PromotionsComponent },

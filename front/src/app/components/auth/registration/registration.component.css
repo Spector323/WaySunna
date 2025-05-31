@@ -117,7 +117,21 @@ input[type="password"]:focus {
   position: relative;
   overflow: hidden;
 }
-
+.title-text {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #1e293b;
+  text-align: center;
+  font-weight: 400;
+}
+.title-text a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+.title-text a:hover {
+  text-decoration: underline;
+}
 /* === Анимация градиента по оси X === */
 @keyframes gradientShift {
   0% {

@@ -1,12 +1,12 @@
 <form class="user-form">
     <h2>Логин</h2>
   
-    <label for="name">name:</label>
+    <label for="name">Имя:</label>
     <input
       type="text"
       id="name"
       [(ngModel)]="name"
-      placeholder="Введите name"
+      placeholder="Введите имя"
       class="form-input"
       [ngModelOptions]="{standalone: true}"
     />
@@ -30,4 +30,6 @@
     >
       {{ isSubmitting ? 'Загрузка...' : 'Войти' }}
     </button>
+
+    <p class="title-text">У вас нету аккаунта?<a href="/register"> Зарегестрироваться</a></p>
   </form>

@@ -27,17 +27,6 @@
       [ngModelOptions]="{standalone: true}"
     />
   
-    <!-- <label for="userAge">Возраст:</label>
-    <input
-      type="number"
-      id="userAge"
-      [(ngModel)]="userAge"
-      placeholder="Введите возраст"
-      class="form-input"
-      min="1"
-      [ngModelOptions]="{standalone: true}"
-    /> -->
-  
     <label for="userPassword">Пароль (минимум 6 символов):</label>
     <input 
       type="password" 
@@ -58,15 +47,6 @@
       [ngModelOptions]="{standalone: true}"
     />
     
-    <!-- <label for="avatar">Добавить фото: </label>
-    <input 
-      type="file"
-      id="avatar"
-      (change)="onfileSelected($event)"
-      class="form-input"
-      
-    /> -->
-    
     <p class="error-message">
       {{errorPassword}}
     </p>
@@ -82,4 +62,5 @@
     >
       {{ isSubmitting ? 'Регистрация...' : 'Зарегистрироваться' }}
     </button>
+    <p class="title-text">У вас уже есть аккаунт?<a href="/login"> Войти</a></p>
   </form>
