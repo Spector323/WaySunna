@@ -1,101 +1,97 @@
-/* === Контейнер профиля === */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f4f6f8;
+  font-family: 'Inter', sans-serif;
+  color: #2d3748;
+}
+
 .profile-container {
   max-width: 800px;
   margin: 4rem auto;
-  padding: 2.5rem;
+  padding: 2rem;
+  background: white;
   border-radius: 20px;
-  background: linear-gradient(to right, #ffffff, #f9f9f9);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-  font-family: 'Segoe UI', Roboto, sans-serif;
-  color: #1a1a1a;
-  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* === Заголовок профиля === */
-.profile-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.profile-header h2 {
+.profile-header h1 {
   font-size: 2rem;
-  font-weight: 700;
-  color: #1dbdcc;
+  color: #1a1a1a;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
   position: relative;
 }
 
-.profile-header h2::after {
+.profile-header h1::after {
   content: '';
-  display: block;
-  height: 3px;
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 60px;
-  background: #0fe995;
-  margin-top: 6px;
+  height: 3px;
+  background: linear-gradient(to right, #1dbdcc, #0fe995);
   border-radius: 2px;
 }
 
-.back-btn {
-  font-size: 0.95rem;
-  color: #1dbdcc;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-.back-btn:hover {
-  color: #0fe995;
-}
-
-/* === Карточка профиля === */
-.profile-card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+.avatar-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-  transition: transform 0.3s ease;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
-
-
-/* === Аватар и иконка редактирования === */
 .avatar-section {
   position: relative;
-  text-align: center;
 }
 
 .avatar {
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #1dbdcc;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease;
+  border: 4px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .avatar:hover {
   transform: scale(1.05);
 }
 
+.avatar-placeholder {
+  width: 140px;
+  height: 140px;
+  background: #f7fafc;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #cbd5e0;
+}
+
 .avatar-edit {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 10px;
+  right: 10px;
   background: #1dbdcc;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: background-color 0.3s ease;
 }
 
@@ -103,145 +99,80 @@
   background-color: #0fe995;
 }
 
-.avatar-edit input {
-  display: none;
+.user-details {
+  display: grid;
+  gap: 1.5rem;
 }
 
-.avatar-placeholder {
-  width: 130px;
-  height: 130px;
-  background-color: #f0f0f0;
-  border-radius: 50%;
+.info-row {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px dashed #ccc;
+  flex-direction: column;
 }
 
-/* === Информация о пользователе === */
-.user-info {
-  text-align: center;
-}
-
-.user-info p {
-  margin: 0.4rem 0;
-  font-size: 1.05rem;
-  color: #333;
-}
-
-.user-info p strong {
-  color: #111;
-}
-
-/* === Кнопки действий (кнопки не менял) === */
-.action-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* === Форма редактирования === */
-.edit-form {
-  background: #fff;
-  border-radius: 18px;
-  padding: 2rem;
-  margin-top: 2rem;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
-  animation: fadeInUp 0.5s ease;
-}
-
-.edit-form h3 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  color: #1dbdcc;
-}
-
-/* === Поля формы === */
-.form-group {
-  margin-bottom: 1.3rem;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  color: #2c3e50;
+.info-row label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4a5568;
   margin-bottom: 0.4rem;
 }
 
-.form-input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #ccc;
+.editable-input {
+  padding: 12px 16px;
+  border: 1px solid #cbd5e0;
   border-radius: 10px;
-  background: #fafafa;
   font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: #f9fafb;
 }
 
-.form-input:focus {
+.editable-input:focus {
   border-color: #1dbdcc;
-  outline: none;
-  background-color: #fff;
+  background-color: white;
   box-shadow: 0 0 0 4px rgba(29, 189, 204, 0.15);
 }
 
-/* === Ошибка === */
-.error-message {
-  color: #e74c3c;
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  font-weight: 500;
-}
-
-/* === Кнопки действий === */
 .action-buttons {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 1rem;
   justify-content: center;
+  margin-top: 2rem;
 }
 
-.edit-btn,
-.logout-btn {
-  padding: 10px 20px;
+.btn {
+  padding: 12px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
-.edit-btn {
-  background: linear-gradient(90deg, #0fe995, #5cc6d0);
+.save-btn {
+  background: linear-gradient(to right, #0fe995, #1dbdcc);
   color: white;
 }
 
-.edit-btn:hover {
+.save-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 8px 20px rgba(29, 189, 204, 0.25);
 }
 
 .logout-btn {
-  background: linear-gradient(90deg, #ff6f61, #e74c3c);
+  background: linear-gradient(to right, #ff6f61, #e74c3c);
   color: white;
 }
 
 .logout-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(231, 76, 60, 0.3);
+  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.25);
 }
 
-/* === Анимации === */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.not-found {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #e53e3e;
+  margin-top: 4rem;
 }

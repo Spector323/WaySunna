@@ -1,32 +1,34 @@
 <main class="main">
-  <div class="cn-header">
-    <a class="logo" href="/">WaySunna</a>
-    <div class="title">
-      <a routerLink="/" routerLinkActive="active">Главная</a>
-      <a href="/favorites" routerLinkActive="active">Избранное</a>
-      <a href="/basket" routerLinkActive="active">Корзина</a>
-    </div>
-    <div class="auth-section">
-      <ng-container *ngIf="isAuthenticated(); else notAuthenticated">
-        <a routerLink="/profile" class="profile-avatar" title="Профиль">
-          <ng-container *ngIf="user && user.avatar && !isVideo(user.avatar); else noAvatar">
-            <img [src]="'http://localhost:5000/' + user.avatar" alt="Аватар" class="avatar" />
-          </ng-container>
-          <ng-template #noAvatar>
-            <div class="avatar-placeholder">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="#007bff">
-                <path
-                  d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
-              </svg>
-            </div>
-          </ng-template>
-        </a>
-        <a (click)="logout()" class="logout-link">Выйти</a>
-      </ng-container>
-      <ng-template #notAuthenticated>
-        <a routerLink="/login">Войти</a>
-        <a routerLink="/register">Регистрация</a>
-      </ng-template>
+  <div class="header">
+    <div class="cn-header">
+      <a class="logo" href="/">WaySunna</a>
+      <div class="title">
+        <a routerLink="/" routerLinkActive="active">Главная</a>
+        <a href="/favorites" routerLinkActive="active">Избранное</a>
+        <a href="/basket" routerLinkActive="active">Корзина</a>
+      </div>
+      <div class="auth-section">
+        <ng-container *ngIf="isAuthenticated(); else notAuthenticated">
+          <a routerLink="/profile" class="profile-avatar" title="Профиль">
+            <ng-container *ngIf="user && user.avatar && !isVideo(user.avatar); else noAvatar">
+              <img [src]="'http://localhost:5000/' + user.avatar" alt="Аватар" class="avatar" />
+            </ng-container>
+            <ng-template #noAvatar>
+              <div class="avatar-placeholder">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#007bff">
+                  <path
+                    d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                </svg>
+              </div>
+            </ng-template>
+          </a>
+          <a (click)="logout()" class="logout-link">Выйти</a>
+        </ng-container>
+        <ng-template #notAuthenticated>
+          <a routerLink="/login">Войти</a>
+          <a routerLink="/register">Регистрация</a>
+        </ng-template>
+      </div>
     </div>
   </div>
   <router-outlet></router-outlet>

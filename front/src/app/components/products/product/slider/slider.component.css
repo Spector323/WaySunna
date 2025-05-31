@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 2rem auto;
   border-radius: 24px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
@@ -11,7 +11,7 @@
 
 .slides {
   display: flex;
-  height: 700px;
+  height: 600px;
   position: relative;
   transition: transform 1.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -135,9 +135,9 @@
   background: linear-gradient(135deg, rgba(15, 233, 149, 0.9), rgba(92, 198, 208, 0.9));
   border: none;
   color: white;
-  font-size: 2.2rem;
-  width: 50px;
-  height: 50px;
+  font-size: 1.6rem;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   cursor: pointer;
   margin: 0 2rem;
