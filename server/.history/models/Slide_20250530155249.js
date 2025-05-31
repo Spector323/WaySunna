@@ -1,8 +1,8 @@
 const { Schema, model } = require("mongoose");
 
 const Slide = new Schema({
-  title: { type: String },
-  description: { type: String },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
   buttonText: { type: String },
   isVideo: { type: Boolean, default: false },
   srcUrl: { type: String, },

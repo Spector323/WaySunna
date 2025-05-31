@@ -21,7 +21,7 @@ export class SliderComponent implements AfterViewInit {
   currentSlide = 0;
   slides: any[] = [];
 
-  constructor(private productService: ProductServiceService, private http: HttpClient) {}
+  constructor(private productService: ProductServiceService, private http: HttpClient) { }
 
   async ngAfterViewInit() {
     try {
@@ -41,7 +41,7 @@ export class SliderComponent implements AfterViewInit {
 
   updateSlide() {
     const slides = this.slidesContainer.nativeElement;
-    slides.style.transform = `translateX(-${this.currentSlide * (100 / this.slides.length)}%)`;
+    slides.style.transform = `translateX(-${this.currentSlide * 100}%)`;
   }
 
   goToSlide(index: number) {
@@ -80,30 +80,29 @@ export class SliderComponent implements AfterViewInit {
     }
   }
 
+  onTypeChange() {
+    this.selectedSlide.image = null;
+    this.selectedSlide.video = null;
+  }
   async loadSlides() {
     try {
       const data = await this.productService.getSlides().toPromise();
-      this.slides = data as any[];
+
+      // Очищаем и нормализуем данные
+      this.slides = data.map((slide: any) => ({
+        ...slide,
+        title: slide.title?.trim() || '',
+        description: slide.description?.trim() || '',
+        buttonText: slide.buttonText?.trim() || undefined, // важно!
+        isVideo: slide.isVideo || false,
+        image: slide.image || null,
+        video: slide.video || null
+      }));
+
       console.log('Slides loaded:', this.slides);
     } catch (e) {
       console.error('Ошибка загрузки слайдов:', e);
     }
-  }
-
-  addSlide() {
-    if (!this.isAdmin) {
-      alert('Доступ запрещен: требуется роль Admin');
-      return;
-    }
-    this.selectedSlide = {
-      title: '',
-      description: '',
-      buttonText: '',
-      isVideo: false,
-      image: null,
-      video: null
-    };
-    this.modalVisible = true;
   }
 
   editSlide(slide: any) {
@@ -111,7 +110,34 @@ export class SliderComponent implements AfterViewInit {
       alert('Доступ запрещен: требуется роль Admin');
       return;
     }
-    this.selectedSlide = { ...slide, image: null, video: null };
+
+    this.selectedSlide = {
+      ...slide,
+      title: slide.title?.trim() || '',
+      description: slide.description?.trim() || '',
+      buttonText: slide.buttonText?.trim() || undefined,
+      isVideo: slide.isVideo || false,
+      image: slide.image || null,
+      video: slide.video || null
+    };
+
+    this.modalVisible = true;
+  }
+
+  addSlide() {
+    if (!this.isAdmin) {
+      alert('Доступ запрещен: требуется роль Admin');
+      return;
+    }
+
+    this.selectedSlide = {
+      title: '',
+      description: '',
+      buttonText: undefined, // важно!
+      isVideo: false,
+      image: null,
+      video: null
+    };
     this.modalVisible = true;
   }
 
@@ -151,10 +177,23 @@ export class SliderComponent implements AfterViewInit {
       alert('Доступ запрещен: требуется роль Admin');
       return;
     }
+
     const slide = { ...this.selectedSlide };
+
+    // Очищаем значения
+    slide.title = slide.title?.trim() || '';
+    slide.description = slide.description?.trim() || '';
+    slide.buttonText = slide.buttonText?.trim() || '';
+
+    // Если buttonText пустой, удаляем его
+
+
     const token = localStorage.getItem('token') || '';
     const file = slide.isVideo ? slide.video : slide.image;
 
+    if (!slide.buttonText) {
+      delete slide.buttonText;
+    }
     if (slide._id) {
       this.productService.editSlide(slide, token, file).subscribe({
         next: () => {
@@ -181,7 +220,6 @@ export class SliderComponent implements AfterViewInit {
       });
     }
   }
-
   closeModal() {
     this.modalVisible = false;
     this.selectedSlide = null;

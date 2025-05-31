@@ -14,7 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { SliderComponent } from './components/products/product/slider/slider.component';
-import { ProductSericeService } from './service/product-service.service';
+import { ProductServiceService } from './service/product-service.service';
 
 import { routes } from './app.routes';
 import { AppRoutingModule } from './app.routes';
@@ -39,7 +39,7 @@ import { AppRoutingModule } from './app.routes';
     RouterModule.forRoot(routes),
     AppRoutingModule
   ],
-  providers: [ProductSericeService],
+  providers: [ProductServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,17 +1,17 @@
 <div class="slider-industrial">
   <div class="slides" #slidesContainer>
     <div class="slide" *ngFor="let slide of slides; let i = index" [ngClass]="{'active': currentSlide === i}"
-         [style.background-image]="slide.image ? 'url(http://localhost:5000/' + slide.image + ')' : ''">
+      [style.background-image]="slide.image ? 'url(http://localhost:5000/' + slide.image + ')' : ''">
       <div class="slide-content">
         <h2>{{ slide.title }}</h2>
         <p>{{ slide.description }}</p>
-        <a href="#" class="btn">{{ slide.buttonText }}</a>
+        <a *ngIf="slide.buttonText && slide.buttonText.trim() !== ''" href="#" class="btn">{{ slide.buttonText }}</a>
       </div>
       <div class="slide-header" *ngIf="isAdmin">
         <button class="delete-btn" (click)="deleteSlide(slide._id)">✖</button>
         <button class="edit-btn" (click)="editSlide(slide)">✎</button>
       </div>
-      
+
       <video *ngIf="slide.isVideo" #videoPlayer muted>
         <source [src]="slide.srcUrl ? 'http://localhost:5000/' + slide.srcUrl : ''" type="video/mp4">
       </video>
@@ -22,8 +22,8 @@
     <button class="nav-btn next-btn" (click)="nextSlide()" [disabled]="currentSlide === slides.length - 1">❯</button>
   </div>
   <div class="slider-indicators">
-    <span class="indicator" *ngFor="let slide of slides; let i = index"
-          [ngClass]="{'active': currentSlide === i}" (click)="goToSlide(i)"></span>
+    <span class="indicator" *ngFor="let slide of slides; let i = index" [ngClass]="{'active': currentSlide === i}"
+      (click)="goToSlide(i)"></span>
   </div>
 </div>
 
@@ -37,7 +37,7 @@
 
     <div class="form-group">
       <label>Тип слайда</label>
-      <select [(ngModel)]="selectedSlide.isVideo">
+      <select [(ngModel)]="selectedSlide.isVideo" (change)="onTypeChange()">
         <option [value]="false">Изображение</option>
         <option [value]="true">Видео</option>
       </select>
