@@ -41,7 +41,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* === Сетка товаров и акций === */
-.product-grid, .promotion-cards {
+.product-grid, .product-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
@@ -287,7 +287,7 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0 auto;
   }
   .product-grid,
-  .promotion-cards {
+  .product-cards {
     height: 100%;
     grid-template-columns: repeat(5, 1fr);
   }
@@ -313,7 +313,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @media (max-width: 480px) {
   .product-grid,
-  .promotion-cards {
+  .product-cards {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 16px;
@@ -323,12 +323,12 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 
   .product-grid::-webkit-scrollbar,
-  .promotion-cards::-webkit-scrollbar {
+  .product-cards::-webkit-scrollbar {
     height: 8px;
   }
 
   .product-grid::-webkit-scrollbar-thumb,
-  .promotion-cards::-webkit-scrollbar-thumb {
+  .product-cards::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 4px;
   }

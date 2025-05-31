@@ -50,6 +50,7 @@ export class ProductServiceService { // TODO: Переименовать в Prod
     formData.append('name', product.name);
     formData.append('price', product.price.toString());
     formData.append('description', product.description);
+    formData.append('discount', product.discount.toString());
     formData.append('type', product.type);
     if (image) {
       formData.append('image', image);
@@ -66,6 +67,7 @@ export class ProductServiceService { // TODO: Переименовать в Prod
   const formData = new FormData();
   formData.append('name', product.name);
   formData.append('price', product.price.toString());
+  formData.append('discount', product.discount ? product.discount.toString() : '0'); // Добавляем скидку, если она есть
   formData.append('description', product.description);
   formData.append('type', product.type);
 

@@ -2,6 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 import { ProductServiceService } from '../../../../service/product-service.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../../../../models/product.model';
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-discounts',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatIconModule,RouterModule],
   templateUrl: './discounts.component.html',
   styleUrls: ['./discounts.component.css']
 })
@@ -43,14 +44,19 @@ export class DiscountsComponent implements AfterViewInit {
   async loadProducts() {
     try {
       const data = await this.productService.getProducts().toPromise();
-      this.products = (data as Product[]).filter(p => p.type === 'promotion');
+      this.products = (data as Product[]).filter(p => p.type === 'discount');
       this.filterProducts = [...this.products];
+
+      console.log(this.filterProducts);
+      
     } catch (e) {
       console.error('Ошибка загрузки продуктов:', e);
     }
   }
 
   async loadFavorites() {
+console.log(this.products);
+
     try {
       const token = localStorage.getItem('token') || '';
       if (token) {
@@ -148,9 +154,10 @@ export class DiscountsComponent implements AfterViewInit {
       _id: '',
       name: '',
       description: '',
-      price: 0,
+      price: '',
+      discount: '',
       image: null,
-      type: 'promotion'
+      type: 'discount'
     };
     this.modalVisible = true;
   }

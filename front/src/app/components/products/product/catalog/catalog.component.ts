@@ -2,6 +2,8 @@ import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProductServiceService } from '../../../../service/product-service.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../../../../models/product.model';
@@ -9,7 +11,7 @@ import { Product } from '../../../../models/product.model';
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatIconModule, RouterModule],
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.css']
 })
@@ -17,15 +19,12 @@ export class CatalogComponent implements AfterViewInit {
   isAdmin = false;
   modalVisible = false;
   selectedProduct: any = null;
-  addCart: { [key: string]: boolean } = {};
+  addBasket: { [key: string]: boolean } = {}; // Переименовал addCart
   favorites: { [key: string]: boolean } = {};
   products: Product[] = [];
   filterProducts: Product[] = [];
 
-  constructor(
-    private productService: ProductServiceService,
-    private http: HttpClient
-  ) {}
+  constructor(private productService: ProductServiceService, private http: HttpClient, private router: Router) { }
 
   async ngAfterViewInit() {
     try {
@@ -38,7 +37,6 @@ export class CatalogComponent implements AfterViewInit {
       console.error('Ошибка проверки роли:', e);
       this.isAdmin = false;
     }
-
     await this.loadProducts();
     await this.loadFavorites();
   }
@@ -47,9 +45,10 @@ export class CatalogComponent implements AfterViewInit {
     try {
       const data = await this.productService.getProducts().toPromise();
       this.products = (data as Product[]).filter(p => p.type === 'catalog');
+      console.log('Загруженные продукты:', this.products);
       this.filterProducts = [...this.products];
     } catch (e) {
-      console.error('Ошибка загрузки продуктов', e);
+      console.error('Ошибка загрузки продуктов:', e);
     }
   }
 
@@ -69,12 +68,32 @@ export class CatalogComponent implements AfterViewInit {
     }
   }
 
+  async addProductBasket(product: Product) {
+  const token = localStorage.getItem('token') || '';
+  if (!token) {
+    alert('Войдите в аккаунт, чтобы добавить в корзину');
+    return;
+  }
+  try {
+    await this.productService.addToBasket(product._id, 1, token).toPromise();
+    this.addBasket[product._id] = true;
+  } catch (error) {
+    console.error('Ошибка добавления в корзину:', error);
+    alert('Ошибка при добавлении в корзину');
+  }
+}
+
+   goToProduct(id: string) {
+    this.router.navigate(['/product', id]);
+  }
+
   toggleFavorite(product: Product) {
     const token = localStorage.getItem('token') || '';
     if (!token) {
       alert('Войдите в аккаунт, чтобы добавить в избранное');
       return;
     }
+
     if (this.favorites[product._id]) {
       this.productService.removeFromFavorites(product._id, token).subscribe({
         next: () => {
@@ -97,22 +116,6 @@ export class CatalogComponent implements AfterViewInit {
           alert('Ошибка: ' + (error.error?.message || 'Не удалось добавить в избранное'));
         }
       });
-    }
-  }
-
-  async addProductBasket(product: Product) {
-    const token = localStorage.getItem('token') || '';
-    if (!token) {
-      alert('Войдите в аккаунт, чтобы добавить в корзину');
-      return;
-    }
-    try {
-      await this.productService.addToBasket(product._id, 1, token).toPromise();
-      this.addCart[product._id] = true;
-      alert('Товар добавлен в корзину');
-    } catch (error) {
-      console.error('Ошибка добавления в корзину:', error);
-      // alert('Ошибка: ' + (error.error?.message || 'Не удалось добавить в корзину'));
     }
   }
 

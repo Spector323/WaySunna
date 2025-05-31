@@ -35,6 +35,8 @@ export class ProductDetailComponent implements OnInit {
   async loadProduct() {
     try {
       let productId = this.route.snapshot.paramMap.get('id');
+
+      
       if (productId) {
         productId = this.getProductId(productId);
         const result = await this.productService.getProductById(productId).toPromise();

@@ -1,17 +1,19 @@
 <h2 class="section-title">Скидки</h2>
-<div class="promotion-cards main">
+<div class="product-cards main">
   <div class="card" *ngFor="let product of filterProducts">
     <div class="card-header">
       <button class="favorite-btn" (click)="toggleFavorite(product)">
         <mat-icon>{{ favorites[product._id] ? 'favorite' : 'favorite_border' }}</mat-icon>
       </button>
     </div>
-    <img [src]="product.image ? 'http://localhost:5000/' + product.image : 'assets/placeholder.jpg'"
-         alt="Product Image" />
+    <a [routerLink]="['/product', product._id]">
+      <img [src]="product.image ? 'http://localhost:5000/' + product.image : 'assets/placeholder.jpg'"
+           alt="{{ product.name }}" />
+    </a>
     <h3>{{ product.name }}</h3>
     <p>{{ product.description }}</p>
     <p class="price">
-      {{ product.price - 500 }}₽
+      {{ product.price && product.discount ? product.price - product.discount : "" }}₽
       <span class="old-price">{{ product.price }}₽</span>
     </p>
     <button class="cart-btn" (click)="addProductBasket(product)">Добавить в корзину</button>
@@ -45,6 +47,10 @@
     <div class="form-group">
       <label>Цена</label>
       <input type="number" [(ngModel)]="selectedProduct.price" />
+    </div>
+    <div class="form-group">
+      <label>Скидка</label>
+      <input type="number" [(ngModel)]="selectedProduct.discount" />
     </div>
     <div class="modal-buttons">
       <button (click)="saveProduct()">Сохранить</button>
