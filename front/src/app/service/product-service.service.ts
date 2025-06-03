@@ -16,7 +16,7 @@ export interface Basket {
 @Injectable({
   providedIn: 'root'
 })
-export class ProductServiceService { // TODO: Переименовать в ProductServiceService
+export class ProductService { // TODO: Переименовать в ProductService
   apiUrl = 'http://localhost:5000';
 
   constructor(private http: HttpClient) {}

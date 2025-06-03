@@ -1,63 +1,63 @@
-<div class="profile-container" *ngIf="user && !error; else errorState">
-  <div class="profile-header">
-    <h1>Профиль</h1>
-  </div>
+<div class="profile">
+  <div class="profile-container" *ngIf="user && !error; else errorState">
+    <div class="profile-header">
+      <h1>Профиль</h1>
+    </div>
 
-  <div class="profile-card">
-    <!-- Avatar -->
-    <div class="avatar-wrapper">
-      <div class="avatar-section">
-        <ng-container *ngIf="user.avatar; else noAvatar">
-          <img [src]="avatarUrl || 'http://localhost:5000/' + user.avatar" alt="Аватар" class="avatar" />
-        </ng-container>
-        <ng-template #noAvatar>
-          <div class="avatar-placeholder">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="#ccc">
+    <div class="profile-card">
+      <!-- Avatar -->
+      <div class="avatar-wrapper">
+        <div class="avatar-section">
+          <ng-container *ngIf="user.avatar; else noAvatar">
+            <img [src]="avatarUrl || 'http://localhost:5000/' + user.avatar" alt="Аватар" class="avatar" />
+          </ng-container>
+          <ng-template #noAvatar>
+            <div class="avatar-placeholder">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="#ccc">
+                <path
+                  d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+              </svg>
+            </div>
+          </ng-template>
+          <label for="avatar" class="avatar-edit">
+            <input type="file" id="avatar" accept="image/*,video/mp4" (change)="onFileChange($event)" hidden />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
               <path
-                d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
             </svg>
-          </div>
-        </ng-template>
-        <label for="avatar" class="avatar-edit">
-          <input type="file" id="avatar" accept="image/*,video/mp4" (change)="onFileChange($event)" hidden />
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
-            <path
-              d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-          </svg>
-        </label>
+          </label>
+        </div>
       </div>
-    </div>
 
-    <!-- User Info -->
-    <div class="user-details" *ngIf="!isEditing">
-      <div class="info-row">
-        <label>Имя</label>
-        <input [(ngModel)]="name" placeholder="Введите имя" class="editable-input" />
+      <!-- User Info -->
+      <div class="user-details" *ngIf="!isEditing">
+        <div class="info-row">
+          <label>Имя</label>
+          <input [(ngModel)]="name" placeholder="Введите имя" class="editable-input" />
+        </div>
+        <div class="info-row">
+          <label>Email</label>
+          <input [(ngModel)]="email" placeholder="Введите email" class="editable-input" />
+        </div>
+        <div class="info-row">
+          <label>Телефон</label>
+          <input [(ngModel)]="phone" placeholder="Введите телефон" class="editable-input" />
+        </div>
+        <div class="info-row">
+          <label>Дата регистрации</label>
+          <span>{{ user.registrationDate | date:'dd.MM.yyyy HH:mm' }}</span>
+        </div>
       </div>
-      <div class="info-row">
-        <label>Email</label>
-        <input [(ngModel)]="email" placeholder="Введите email" class="editable-input" />
-      </div>
-      <div class="info-row">
-        <label>Телефон</label>
-        <input [(ngModel)]="phone" placeholder="Введите телефон" class="editable-input" />
-      </div>
-      <div class="info-row">
-        <label>Дата регистрации</label>
-        <span>{{ user.registrationDate | date:'dd.MM.yyyy HH:mm' }}</span>
-      </div>
-    </div>
 
-    <div class="action-buttons">
-      <button class="btn save-btn" (click)="updateProfile()" [disabled]="isSubmitting">
-        {{ isSubmitting ? 'Сохранение...' : 'Сохранить' }}
-      </button>
-      <button class="btn logout-btn" (click)="logout()">Выйти</button>
-      <button class="btn logout-btn" (click)="deleteProfile()">Удалить</button>
+      <div class="action-buttons">
+        <button class="btn save-btn" (click)="updateProfile()" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Сохранение...' : 'Сохранить' }}
+        </button>
+        <button class="btn logout-btn" (click)="logout()">Выйти</button>
+      </div>
     </div>
   </div>
 </div>
-
 <ng-template #errorState>
   <div class="not-found">Ошибка загрузки профиля</div>
 </ng-template>

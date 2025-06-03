@@ -2,8 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend :wght@100..900&display=swap");
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body {
-  height: 100%;
+html,
+body {
+  min-height: 100vh;
   margin: 0;
   font-family: "Lexend", sans-serif;
   background-color: #fafafa;
@@ -14,6 +15,7 @@ html, body {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -30,6 +32,7 @@ input[type="number"]::-webkit-outer-spin-button {
   position: relative;
   letter-spacing: 1px;
 }
+
 .section-title::after {
   content: "";
   display: block;
@@ -41,9 +44,12 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* === Сетка товаров и акций === */
-.product-grid, .product-cards {
+.product-grid,
+.product-cards {
+  width: 1400px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 24px;
   padding: 20px 0px;
   justify-items: center;
@@ -61,10 +67,12 @@ input[type="number"]::-webkit-outer-spin-button {
   text-align: center;
   position: relative;
 }
+
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
 }
+
 .card img {
   width: 100%;
   height: 240px;
@@ -80,16 +88,19 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: 600;
   color: #222;
 }
+
 .card p {
   font-size: 0.95rem;
   color: #666;
   margin: 6px 0;
 }
+
 .price {
   color: #28a745;
   font-weight: bold;
   font-size: 1.1rem;
 }
+
 .old-price {
   text-decoration: line-through;
   color: #bbb;
@@ -104,7 +115,7 @@ input[type="number"]::-webkit-outer-spin-button {
   border-radius: 50px;
   text-decoration: none;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -112,6 +123,7 @@ input[type="number"]::-webkit-outer-spin-button {
   border: none;
   margin: 20px;
 }
+
 .cart-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(15, 233, 149, 0.4);
@@ -125,8 +137,9 @@ input[type="number"]::-webkit-outer-spin-button {
   gap: 12px;
   margin: 12px;
 }
-.btn-admin-add{
-  background: linear-gradient(135deg, #e9a80f, #cad05c);
+
+.btn-admin-add {
+  background: linear-gradient(135deg, #0fe995, #5cc6d0);
   color: white;
   padding: 10px 20px;
   border-radius: 50px;
@@ -135,15 +148,16 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: all 12s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border: none;
-  margin-top: 12px;
+  margin: 20px;
 }
+
 .btn-admin-add:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(233, 189, 15, 0.4);
-  background: linear-gradient(135deg, #bfc903, #c75c2e);
+  box-shadow: 0 8px 20px rgba(15, 233, 149, 0.4);
+  background: linear-gradient(135deg, #03c983, #2eafc7);
 }
 .admin-actions button {
   border: none;
@@ -153,19 +167,23 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 0.9rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
+
 .admin-actions button:first-child {
   background-color: #007bff;
   color: #fff;
 }
+
 .admin-actions button:first-child:hover {
   background-color: #0056b3;
 }
+
 .admin-actions button:last-child {
   background-color: #dc3545;
   color: #fff;
 }
+
 .admin-actions button:last-child:hover {
   background-color: #c82333;
 }
@@ -180,14 +198,17 @@ input[type="number"]::-webkit-outer-spin-button {
   border: none;
   cursor: pointer;
 }
+
 .favorite-btn .material-icons {
   font-size: 24px;
   color: #ccc;
   transition: color 0.3s;
 }
+
 .favorite-btn .material-icons.favorite {
   color: #ff4d4f;
 }
+
 .favorite-btn:hover .material-icons {
   color: #ff4d4f;
 }
@@ -202,6 +223,7 @@ input[type="number"]::-webkit-outer-spin-button {
   align-items: center;
   z-index: 999;
 }
+
 .modal-content {
   background: #fff;
   padding: 30px;
@@ -210,21 +232,25 @@ input[type="number"]::-webkit-outer-spin-button {
   max-width: 550px;
   animation: slideIn 0.3s ease;
 }
+
 .modal-content h2 {
   font-size: 1.8rem;
   margin-bottom: 24px;
   text-align: center;
   color: #111;
 }
+
 .form-group {
   margin-bottom: 20px;
 }
+
 .form-group label {
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
   color: #555;
 }
+
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -234,18 +260,21 @@ input[type="number"]::-webkit-outer-spin-button {
   border: 1px solid #ddd;
   transition: border-color 0.3s;
 }
+
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
+
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 20px;
 }
+
 .modal-buttons button {
   padding: 10px 20px;
   font-size: 1rem;
@@ -254,17 +283,21 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .modal-buttons button:first-child {
   background-color: #007bff;
   color: #fff;
 }
+
 .modal-buttons button:first-child:hover {
   background-color: #0056b3;
 }
+
 .modal-buttons button:last-child {
   background-color: #6c757d;
   color: #fff;
 }
+
 .modal-buttons button:last-child:hover {
   background-color: #5a6268;
 }
@@ -274,6 +307,7 @@ input[type="number"]::-webkit-outer-spin-button {
     transform: translateY(-20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -282,10 +316,11 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* === Адаптивность === */
 @media (max-width: 768px) {
-  .home{
+  .home {
     width: 740px;
     margin: 0 auto;
   }
+
   .product-grid,
   .product-cards {
     height: 100%;
@@ -312,6 +347,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @media (max-width: 480px) {
+
   .product-grid,
   .product-cards {
     display: grid;

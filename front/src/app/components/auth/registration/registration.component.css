@@ -1,4 +1,8 @@
 /* === Базовый контейнер формы === */
+.main {
+  min-height: calc(100vh - 206px);
+}
+
 .user-form {
   max-width: 450px;
   margin: 2rem auto;
@@ -117,6 +121,7 @@ input[type="password"]:focus {
   position: relative;
   overflow: hidden;
 }
+
 .title-text {
   margin-top: 20px;
   font-size: 16px;
@@ -124,22 +129,27 @@ input[type="password"]:focus {
   text-align: center;
   font-weight: 400;
 }
+
 .title-text a {
   color: #2563eb;
   text-decoration: none;
   font-weight: 600;
 }
+
 .title-text a:hover {
   text-decoration: underline;
 }
+
 /* === Анимация градиента по оси X === */
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -162,15 +172,14 @@ input[type="password"]:focus {
 .submit-button::before {
   content: '';
   position: absolute;
-  top: 0; left: -75%;
+  top: 0;
+  left: -75%;
   width: 250%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0.2) 0%,
-    rgba(255,255,255,0.4) 50%,
-    rgba(255,255,255,0) 80%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 80%);
   transform: skewX(-20deg);
   transition: left 0.5s ease;
   pointer-events: none;
@@ -214,8 +223,13 @@ input[type="password"]:focus {
 
 /* === Анимации === */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
@@ -223,6 +237,7 @@ input[type="password"]:focus {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

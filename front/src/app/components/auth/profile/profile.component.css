@@ -7,11 +7,14 @@ body {
   font-family: 'Inter', sans-serif;
   color: #2d3748;
 }
-
+.profile{
+  min-height: calc(100vh - 244px);
+  max-width: 900px;
+  margin: 25px auto;
+}
 .profile-container {
-  max-width: 800px;
-  margin: 4rem auto;
-  padding: 2rem;
+  
+  padding: 20px;
   background: white;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -81,7 +84,7 @@ body {
 
 .avatar-edit {
   position: absolute;
-  bottom: 10px;
+  bottom: -5px;
   right: 10px;
   background: #1dbdcc;
   width: 40px;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { ProductServiceService } from '../../../service/product-service.service'; // Обновите импорт
+import { ProductService } from '../../../service/product-service.service'; // Обновите импорт
 import { Product } from '../../../models/product.model';
 
 @Component({
@@ -17,7 +17,7 @@ export class ProductDetailComponent implements OnInit {
   error: string | null = null;
 
   constructor(
-    private productService: ProductServiceService,
+    private productService: ProductService,
     private route: ActivatedRoute
   ) {}
 

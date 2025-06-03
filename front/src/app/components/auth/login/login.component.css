@@ -1,5 +1,9 @@
+.main{
+  min-height: calc(100vh - 238px);
+}
+
 .user-form {
-  max-width: 450px;
+  max-width: 500px;
   margin: 4rem auto;
   padding: 2.8rem;
   border-radius: 20px;
@@ -37,8 +41,8 @@
   display: block;
   font-weight: 600;
   color: #374151;
-  font-size: 0.95rem;
-  margin-top: 1.2rem;
+  font-size: 16px;
+  margin: 10px 0;
 }
 
 .user-form label:first-child {
