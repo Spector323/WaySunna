@@ -7,11 +7,13 @@ import { Router } from '@angular/router';
 import { ProductService } from '../../../service/product-service.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../../../models/product.model';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
+
 
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, RouterModule],
+  imports: [CommonModule, FormsModule, MatIconModule, RouterModule, NgxSonnerToaster],
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.css']
 })
@@ -22,7 +24,6 @@ export class CatalogComponent implements AfterViewInit {
   addBasket: { [key: string]: boolean } = {}; // Переименовал addCart
   favorites: { [key: string]: boolean } = {};
   products: Product[] = [];
-  filterProducts: Product[] = [];
 
   constructor(private productService: ProductService, private http: HttpClient, private router: Router) { }
 
@@ -46,7 +47,6 @@ export class CatalogComponent implements AfterViewInit {
       const data = await this.productService.getProducts().toPromise();
       this.products = (data as Product[]).filter(p => p.type === 'catalog');
       console.log('Загруженные продукты:', this.products);
-      this.filterProducts = [...this.products];
     } catch (e) {
       console.error('Ошибка загрузки продуктов:', e);
     }
@@ -71,7 +71,7 @@ export class CatalogComponent implements AfterViewInit {
   async addProductBasket(product: Product) {
   const token = localStorage.getItem('token') || '';
   if (!token) {
-    alert('Войдите в аккаунт, чтобы добавить в корзину');
+    toast.info('Войдите в аккаунт, чтобы добавить в корзину');
     return;
   }
   try {
@@ -79,7 +79,7 @@ export class CatalogComponent implements AfterViewInit {
     this.addBasket[product._id] = true;
   } catch (error) {
     console.error('Ошибка добавления в корзину:', error);
-    alert('Ошибка при добавлении в корзину');
+    toast.error('Ошибка при добавлении в корзину');
   }
 }
 
@@ -90,7 +90,7 @@ export class CatalogComponent implements AfterViewInit {
   toggleFavorite(product: Product) {
     const token = localStorage.getItem('token') || '';
     if (!token) {
-      alert('Войдите в аккаунт, чтобы добавить в избранное');
+      toast.info('Войдите в аккаунт, чтобы добавить в избранное');
       return;
     }
 
@@ -98,7 +98,7 @@ export class CatalogComponent implements AfterViewInit {
       this.productService.removeFromFavorites(product._id, token).subscribe({
         next: () => {
           this.favorites[product._id] = false;
-          alert('Товар удален из избранного');
+          toast.error('Товар удален из избранного');
         },
         error: (error) => {
           console.error('Ошибка удаления из избранного:', error);
@@ -109,7 +109,7 @@ export class CatalogComponent implements AfterViewInit {
       this.productService.addToFavorites(product._id, token).subscribe({
         next: () => {
           this.favorites[product._id] = true;
-          alert('Товар добавлен в избранное');
+          toast.success('Товар добавлен в избранное');
         },
         error: (error) => {
           console.error('Ошибка добавления в избранное:', error);
@@ -121,12 +121,10 @@ export class CatalogComponent implements AfterViewInit {
 
   deleteProduct(id: string) {
     if (!this.isAdmin) {
-      alert('Доступ запрещен: требуется роль Admin');
       return;
     }
     if (confirm('Вы уверены, что хотите удалить этот товар?')) {
       this.products = this.products.filter(p => p._id !== id);
-      this.filterProducts = [...this.products];
       this.productService.deleteProduct(id, localStorage.getItem('token') || '').subscribe({
         next: () => {
           console.log('Товар успешно удален');
@@ -142,7 +140,6 @@ export class CatalogComponent implements AfterViewInit {
 
   addProduct() {
     if (!this.isAdmin) {
-      alert('Доступ запрещен: требуется роль Admin');
       return;
     }
     this.selectedProduct = {
@@ -158,7 +155,6 @@ export class CatalogComponent implements AfterViewInit {
 
   editProduct(product: Product) {
     if (!this.isAdmin) {
-      alert('Доступ запрещен: требуется роль Admin');
       return;
     }
     this.selectedProduct = { ...product, image: null };
@@ -174,32 +170,20 @@ export class CatalogComponent implements AfterViewInit {
 
   saveProduct() {
     if (!this.isAdmin) {
-      alert('Доступ запрещен');
+      toast.warning('Доступ запрещен');
       return;
     }
     const token = localStorage.getItem('token') || '';
     if (this.selectedProduct._id) {
       this.productService.editProduct(this.selectedProduct, token, this.selectedProduct.image).subscribe({
         next: () => {
-          console.log('Товар успешно обновлён');
+          toast.success('Товар успешно обновлён');
           this.loadProducts();
           this.closeModal();
         },
         error: (error) => {
           console.error('Ошибка при обновлении товара:', error);
           alert('Ошибка: ' + (error.error?.message || 'Ошибка обновления'));
-        }
-      });
-    } else {
-      this.productService.addProduct(this.selectedProduct, token, this.selectedProduct.image).subscribe({
-        next: () => {
-          console.log('Товар успешно добавлен');
-          this.loadProducts();
-          this.closeModal();
-        },
-        error: (error) => {
-          console.error('Ошибка при добавлении товара:', error);
-          alert('Ошибка: ' + (error.error?.message || 'Ошибка добавления'));
         }
       });
     }

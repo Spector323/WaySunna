@@ -1,6 +1,6 @@
 <h2 class="section-title">Скидки</h2>
 <div class="product-cards main">
-  <div class="card" *ngFor="let product of filterProducts">
+  <div class="card" *ngFor="let product of products">
     <div class="card-header">
       <button class="favorite-btn" (click)="toggleFavorite(product)">
         <mat-icon>{{ favorites[product._id] ? 'favorite' : 'favorite_border' }}</mat-icon>
@@ -13,8 +13,8 @@
     <h3>{{ product.name }}</h3>
     <p>{{ product.description }}</p>
     <p class="price">
-      {{ product.price && product.discount ? product.price - product.discount : "" }}₽
-      <span class="old-price">{{ product.price }}₽</span>
+      {{ product.price && product.discount ? product.price - product.discount : product.price }}₽
+      <span *ngIf="product.discount" class="old-price">{{ product.price }}₽</span>
     </p>
     <button class="cart-btn" (click)="addProductBasket(product)">Добавить в корзину</button>
     <div class="admin-actions" *ngIf="isAdmin">

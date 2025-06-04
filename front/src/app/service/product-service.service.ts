@@ -16,7 +16,7 @@ export interface Basket {
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService { // TODO: Переименовать в ProductService
+export class ProductService {
   apiUrl = 'http://localhost:5000';
 
   constructor(private http: HttpClient) {}
@@ -50,7 +50,8 @@ export class ProductService { // TODO: Переименовать в ProductServ
     formData.append('name', product.name);
     formData.append('price', product.price.toString());
     formData.append('description', product.description);
-    formData.append('discount', product.discount.toString());
+    if (product.discount) formData.append('discount', product.discount.toString()); // Добавляем скидку, если она есть
+    console.log(product.discount);
     formData.append('type', product.type);
     if (image) {
       formData.append('image', image);
@@ -67,7 +68,7 @@ export class ProductService { // TODO: Переименовать в ProductServ
   const formData = new FormData();
   formData.append('name', product.name);
   formData.append('price', product.price.toString());
-  formData.append('discount', product.discount ? product.discount.toString() : '0'); // Добавляем скидку, если она есть
+  formData.append('discount', product.discount ? product.discount.toString() : ''); // Добавляем скидку, если она есть
   formData.append('description', product.description);
   formData.append('type', product.type);
 
@@ -97,7 +98,7 @@ export class ProductService { // TODO: Переименовать в ProductServ
     return this.http.delete(`${this.apiUrl}/product/deleteProduct/${this.getProductId(id)}`, { headers }); // Обновляем ID
   }
 
-  // Методы для слайдов
+  // Методы для слайдов///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getSlides(): Observable<any> {
     return this.http.get(`${this.apiUrl}/slide/getSlides`);
   }
@@ -142,7 +143,7 @@ export class ProductService { // TODO: Переименовать в ProductServ
     return this.http.delete(`${this.apiUrl}/slide/deleteSlide/${this.getProductId(id)}`, { headers }); // Обновляем ID
   }
 
-  // Методы для избранного
+  // Методы для избранного////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addToFavorites(productId: string, token: string): Observable<any> {
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
     const cleanId = this.getProductId(productId); // Обновляем ID
@@ -160,7 +161,7 @@ export class ProductService { // TODO: Переименовать в ProductServ
     return this.http.get<Product[]>(`${this.apiUrl}/favorite/get`, { headers });
   }
 
-  // Методы для корзины
+  // Методы для корзины////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getBasket(token: string): Observable<Basket> {
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
     return this.http.get<Basket>(`${this.apiUrl}/basket/get`, { headers }).pipe(
@@ -184,30 +185,5 @@ export class ProductService { // TODO: Переименовать в ProductServ
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
     const cleanId = this.getProductId(productId); // Обрабатываем ID
     return this.http.post(`${this.apiUrl}/basket/remove`, { productId: cleanId }, { headers });
-  }
-
-  saveToLocalBasket(product: Product, quantity: number) {
-    let localBasket: BasketItem[] = JSON.parse(localStorage.getItem('localBasket') || '[]');
-    const existingItem = localBasket.find(item => item.productId._id === product._id);
-    if (existingItem) {
-      existingItem.quantity += quantity;
-    } else {
-      localBasket.push({ productId: product, quantity });
-    }
-    localStorage.setItem('localBasket', JSON.stringify(localBasket));
-  }
-
-  getLocalBasket(): BasketItem[] {
-    return JSON.parse(localStorage.getItem('localBasket') || '[]');
-  }
-
-  syncLocalBasketWithServer(token: string) {
-    const localBasket = this.getLocalBasket();
-    if (localBasket.length > 0) {
-      localBasket.forEach(async (item) => {
-        await this.addToBasket(this.getProductId(item.productId._id), item.quantity, token).toPromise(); // Обновляем ID
-      });
-      localStorage.removeItem('localBasket'); // Очищаем localStorage после синхронизации
-    }
   }
 }

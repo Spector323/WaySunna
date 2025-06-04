@@ -21,7 +21,6 @@ export class PromotionsComponent implements AfterViewInit {
   addBasket: { [key: string]: boolean } = {}; // Переименовал addCart
   favorites: { [key: string]: boolean } = {};
   products: Product[] = [];
-  filterProducts: Product[] = [];
 
   constructor(private productService: ProductService, private http: HttpClient, private router: Router) { }
 
@@ -44,7 +43,6 @@ export class PromotionsComponent implements AfterViewInit {
     try {
       const data = await this.productService.getProducts().toPromise();
       this.products = (data as Product[]).filter(p => p.type === 'promotion');
-      this.filterProducts = [...this.products];
     } catch (e) {
       console.error('Ошибка загрузки продуктов:', e);
     }
@@ -124,7 +122,6 @@ export class PromotionsComponent implements AfterViewInit {
     }
     if (confirm('Вы уверены, что хотите удалить этот товар?')) {
       this.products = this.products.filter(p => p._id !== id);
-      this.filterProducts = [...this.products];
       this.productService.deleteProduct(id, localStorage.getItem('token') || '').subscribe({
         next: () => {
           console.log('Товар успешно удален');

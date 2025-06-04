@@ -1,6 +1,6 @@
 <h2 class="section-title">Акции</h2>
 <div class="product-cards main">
-  <div class="card" *ngFor="let product of filterProducts">
+  <div class="card" *ngFor="let product of products">
     <div class="card-header">
       <button class="favorite-btn" (click)="toggleFavorite(product)">
         <mat-icon>{{ favorites[product._id] ? 'favorite' : 'favorite_border' }}</mat-icon>

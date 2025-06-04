@@ -1,31 +1,6 @@
 const Product = require("../models/Product");
 
 class productController {
-  async addProduct(req, res) {
-    const { name, price, description, type } = req.body;
-    console.log('addProduct:', { body: req.body, file: req.file });
-
-    try {
-      const candidate = await Product.findOne({ name });
-      if (candidate) {
-        return res.status(400).json({ message: "Товар с таким названием уже существует" });
-      }
-
-      const newProduct = new Product({
-        name,
-        price: parseFloat(price),
-        description,
-        type,
-        image: req.file ? req.file.path : '' // Используем req.file вместо req.files
-      });
-
-      await newProduct.save();
-      return res.status(200).json({ message: "Товар успешно добавлен", product: newProduct });
-    } catch (e) {
-      console.error('Ошибка addProduct:', e);
-      res.status(400).json({ message: "Ошибка при добавлении товара", error: e.message });
-    }
-  }
 
   async getProducts(req, res) {
     try {
@@ -38,64 +13,90 @@ class productController {
   }
 
   async getProduct(req, res) {
-  try {
-    let { id } = req.params;
-    // Удаляем ObjectId('...') если оно пришло
-    if (id.startsWith('ObjectId(')) {
-      id = id.replace(/ObjectId\(['"]?/, '').replace(/['"]?\)/, '');
+    try {
+      let { id } = req.params;
+      // Удаляем ObjectId('...') если оно пришло
+      if (id.startsWith('ObjectId(')) {
+        id = id.replace(/ObjectId\(['"]?/, '').replace(/['"]?\)/, '');
+      }
+      const product = await Product.findOne({ _id: id });
+      if (!product) {
+        return res.status(404).json({ message: "Товар не найден" });
+      }
+      res.status(200).json(product);
+    } catch (e) {
+      console.error('Ошибка getProduct:', e);
+      res.status(400).json({ message: "Ошибка при попытке получить данные товара" });
     }
-    const product = await Product.findOne({ _id: id });
-    if (!product) {
-      return res.status(404).json({ message: "Товар не найден" });
-    }
-    res.status(200).json(product);
-  } catch (e) {
-    console.error('Ошибка getProduct:', e);
-    res.status(400).json({ message: "Ошибка при попытке получить данные товара" });
   }
-}
-
-  async changeProduct(req, res) {
-  try {
-    const { id } = req.params;
+  async addProduct(req, res) {
     const { name, price, description, type } = req.body;
 
-    // Конвертируем строку в число
-    const newPrice = parseFloat(price);
+    try {
+      const candidate = await Product.findOne({ name });
+      if (candidate) {
+        return res.status(400).json({ message: "Товар с таким названием уже существует" });
+      }
 
-    // Ищем текущий товар
-    const product = await Product.findById(id);
-    if (!product) {
-      return res.status(404).json({ message: "Товар не найден" });
+      const newProduct = new Product({
+        name,
+        price: parseFloat(price),
+        description,
+        discount: 0, // Устанавливаем скидку по умолчанию
+        type,
+        image: req.file ? req.file.path : '' // Используем req.file вместо req.files
+      });
+      console.error('Добавляемый товар:', newProduct);
+      await newProduct.save();
+      return res.status(200).json({ message: "Товар успешно добавлен", product: newProduct });
+    } catch (e) {
+      console.error('Ошибка addProduct:', e);
+      res.status(400).json({ message: "Ошибка при добавлении товара", error: e.message });
     }
-
-    // Сохраняем старую цену, если она изменилась
-    let updateData = {
-      name,
-      price: newPrice,
-      description,
-      type
-    };
-
-    // Если цена изменилась — сохраняем предыдущую
-    if (product.price !== newPrice) {
-      updateData.oldPrice = product.price;
-    }
-
-    // Если загружено новое изображение
-    if (req.file) {
-      updateData.image = req.file.path;
-    }
-
-    // Обновляем товар
-    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true });
-    return res.status(200).json({ message: "Товар успешно изменён", product: updatedProduct });
-
-  } catch (e) {
-    console.error('Ошибка changeProduct:', e);
-    res.status(400).json({ message: "Ошибка при попытке изменить данные товара" });
   }
-}
+
+  async changeProduct(req, res) {
+    try {
+      const { id } = req.params;
+      const { name, price, discount, description, type } = req.body;
+
+      // Конвертируем строку в число
+      const newPrice = parseFloat(price, discount);
+
+      // Ищем текущий товар
+      const product = await Product.findById(id);
+      if (!product) {
+        return res.status(404).json({ message: "Товар не найден" });
+      }
+
+      // Сохраняем старую цену, если она изменилась
+      let updateData = {
+        name,
+        price: newPrice,
+        discount: newPrice,
+        description,
+        type
+      };
+
+      // Если цена изменилась — сохраняем предыдущую
+      if (product.price !== newPrice) {
+        updateData.oldPrice = product.price;
+      }
+
+      // Если загружено новое изображение
+      if (req.file) {
+        updateData.image = req.file.path;
+      }
+
+      // Обновляем товар
+      const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true });
+      return res.status(200).json({ message: "Товар успешно изменён", product: updatedProduct });
+
+    } catch (e) {
+      console.error('Ошибка changeProduct:', e);
+      res.status(400).json({ message: "Ошибка при попытке изменить данные товара" });
+    }
+  }
 
   async deleteProduct(req, res) {
     try {
