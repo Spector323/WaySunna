@@ -1,6 +1,6 @@
 /* === Базовый контейнер формы === */
 .main {
-  min-height: calc(100vh - 206px);
+  min-height: calc(100vh - 222px);
 }
 
 .user-form {

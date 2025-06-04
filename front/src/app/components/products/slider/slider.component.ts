@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common'; // ✅ Нужен для *ngFor,
 import { FormsModule } from '@angular/forms';   // ✅ Нужен для [(ngModel)]
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ProductService } from '../../../service/product-service.service';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-slider',
@@ -25,18 +24,13 @@ export class SliderComponent implements AfterViewInit {
   @ViewChild('slidesContainer') slidesContainer!: ElementRef;
   @ViewChildren('videoPlayer') videoPlayers!: QueryList<ElementRef<HTMLVideoElement>>;
 
-  constructor(private productService: ProductService, private http: HttpClient, private cdr: ChangeDetectorRef) { }
+  constructor(private productService: ProductService, private http: HttpClient) {}
 
   async ngAfterViewInit() {
     await this.checkAdmin();
     await this.loadSlides();
-
-    // Запускаем с небольшой задержкой, чтобы DOM успел отрендериться
-    setTimeout(() => {
-      this.updateSlide();
-      this.handleVideoSlide();
-      this.cdr.detectChanges(); // ✅ Принудительное обновление
-    }, 500);
+    this.updateSlide();
+    this.handleVideoSlide();
   }
 
   async checkAdmin() {
@@ -81,21 +75,16 @@ export class SliderComponent implements AfterViewInit {
   }
 
   handleVideoSlide() {
-  const videos = this.videoPlayers.toArray();
-  if (videos.length === 0) return;
-
-  const currentVideo = videos[this.currentSlide]?.nativeElement;
-  if (!currentVideo) return;
-
-  if (this.slides[this.currentSlide]?.isVideo) {
-    currentVideo.currentTime = 0;
-    currentVideo.play();
-    currentVideo.onended = () => this.nextSlide();
-  } else {
-    currentVideo.pause();
-    currentVideo.currentTime = 0;
+    const video = this.videoPlayers.toArray()[this.currentSlide]?.nativeElement;
+    if (this.slides[this.currentSlide]?.isVideo && video) {
+      video.currentTime = 0;
+      video.play();
+      video.onended = () => this.nextSlide();
+    } else if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
   }
-}
 
   onTypeChange() {
     this.selectedSlide.image = null;

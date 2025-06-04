@@ -8,12 +8,11 @@ body {
   color: #2d3748;
 }
 .profile{
-  min-height: calc(100vh - 244px);
+  min-height: calc(100vh - 246px);
   max-width: 900px;
   margin: 25px auto;
 }
 .profile-container {
-  
   padding: 20px;
   background: white;
   border-radius: 20px;
