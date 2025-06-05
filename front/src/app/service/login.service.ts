@@ -27,13 +27,7 @@ export class LoginService {
 
   updateProfile(data: FormData, token: string): Observable<any> {
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    return this.http.post(`${this.apiUrl}/updateProfile`, data, { headers }).pipe(
-      map((user) => user || null),
-      catchError(error => {
-        console.error('Ошибка в updateProfile:', error);
-        return of(null);
-      })
-    );
+    return this.http.post(`${this.apiUrl}/updateProfile`, data, { headers })
   }
 
   deleteProfile(token: string): Observable<any> {

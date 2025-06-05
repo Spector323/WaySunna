@@ -10,6 +10,7 @@ class slideController {
         buttonText,
         isVideo,
       });
+      console.log("filesssssssssssssssss", req.file);
 
       if (req?.file?.path) {
         newSlide.srcUrl = req?.file?.path;

@@ -35,7 +35,7 @@ const start = async () => {
       console.log(`Сервер запущен на порту ${PORT}`);
     });
   } catch (e) {
-    console.error("Ошибка при запуске сервера:", e);
+    console.log(e);
   }
 };
 

@@ -22,6 +22,7 @@ module.exports = function (req, res, next) {
 
     // Верификация токена
     const decodeDate = jwt.verify(token, secret);
+    console.log(decodeDate);
     
     // Если верификация успешна - добавляем декодированные данные в запрос
     req.user = decodeDate;

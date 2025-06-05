@@ -13,6 +13,7 @@ const generateAccessToken = (id, roles) => {
 
 class authController {
   async registration(req, res) {
+    console.log('Registration request body:', req.body);
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -29,6 +30,7 @@ class authController {
       if (!userRole) {
         userRole = new Role({ value: 'User' });
         await userRole.save();
+        console.log('Роль "User" создана');
       }
 
       const hashPassword = bcrypt.hashSync(password, 8);
@@ -44,6 +46,7 @@ class authController {
       }
 
       await user.save();
+      console.log('Пользователь сохранён:', user);
 
       const message = {
         from: 'Mailer Test <wedzigew777@gmail.com>',
@@ -107,6 +110,9 @@ class authController {
   }
 
   async updateProfile(req, res) {
+    console.log('req.body:', req.body);
+    console.log('req.file:', req.file);
+
     try {
       const { id } = req.user;
       const { name, email, phone } = req.body;
