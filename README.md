@@ -4,7 +4,7 @@
   <br />
 
   <a href="https://github.com/spector323" target="_blank">
-    <img src="./fornt/public/assets/Profille.png" alt="Project Banner" width="600">
+    <img src="./front/public/assets/Profille.png" alt="Project Banner" width="600">
   </a>
 
   <br />
