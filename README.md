@@ -3,7 +3,7 @@
 
   <br />
 
-  <a href="https://github.com/magasov" target="_blank">
+  <a href="https://github.com/spector323" target="_blank">
     <img src="./fornt/public/assets/Profille.png" alt="Project Banner" width="600">
   </a>
 
