@@ -4,7 +4,7 @@
   <br />
 
   <a href="https://github.com/magasov" target="_blank">
-    <img src="./client/public/assets/readme/banner.png" alt="Project Banner" width="600">
+    <img src="./fornt/public/assets/Profille.png" alt="Project Banner" width="600">
   </a>
 
   <br />
