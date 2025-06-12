@@ -23,8 +23,8 @@
   </p>
 
   <p align="center">
-    <a href="https://github.com/magasov/autoru/issues">Отчеты об ошибках</a> •
-    <a href="https://github.com/magasov/autoru/pulls">Предложить улучшение</a>
+    <a href="https://github.com/Spector323/WaySunna/issues">Отчеты об ошибках</a> •
+    <a href="https://github.com/Spector323/WaySunna/pulls">Предложить улучшение</a>
   </p>
 
 </div>
