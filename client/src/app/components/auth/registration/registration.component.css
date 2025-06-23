@@ -1,0 +1,245 @@
+/* === Базовый контейнер формы === */
+.main {
+  min-height: calc(100vh - 222px);
+}
+
+.user-form {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-form:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* === Заголовок формы === */
+.user-form h2 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  position: relative;
+}
+
+.user-form h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 0.5rem auto 0;
+  background: linear-gradient(to right, #0fe995, #1dbdcc);
+  border-radius: 2px;
+}
+
+/* === Лейблы === */
+.user-form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 0.925rem;
+  margin-top: 1rem;
+  transition: color 0.3s ease;
+}
+
+.user-form label:first-child {
+  margin-top: 0;
+}
+
+/* === Инпуты === */
+.form-input,
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 0.3rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus,
+input[type="password"]:focus {
+  border-color: #4ae296;
+  background-color: #f5fcff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.15);
+}
+
+/* === Сообщения об ошибках и подсказки === */
+.error-message {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin: 0.5rem 0 1rem;
+  font-weight: 500;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.password-mismatch {
+  color: #e74c3c;
+  font-size: 0.825rem;
+  margin: 0 0 1rem;
+  font-weight: 500;
+}
+
+.error-hint {
+  color: #f39c12;
+  font-size: 0.825rem;
+  margin: 0 0 1rem;
+  font-style: italic;
+}
+
+.input-error {
+  border-color: #e74c3c !important;
+  background-color: #fff5f5;
+}
+
+/* === Кнопка отправки === */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #0fe995, #5cc6d0);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.title-text {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #1e293b;
+  text-align: center;
+  font-weight: 400;
+}
+
+.title-text a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.title-text a:hover {
+  text-decoration: underline;
+}
+
+/* === Анимация градиента по оси X === */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* === Эффект при наведении === */
+.submit-button:hover {
+  animation: gradientShift 3s ease-in-out infinite;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(74, 144, 226, 0.35);
+}
+
+/* === Эффект при нажатии === */
+.submit-button:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* === Подложка для анимации градиента (если нужно) === */
+.submit-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 250%;
+  height: 100%;
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 80%);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+.submit-button:hover::before {
+  left: 100%;
+}
+
+/* === Аватар/предпросмотр === */
+.avatar-preview {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.avatar-preview img {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 50%;
+  border: 3px solid #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.avatar-preview img:hover {
+  transform: scale(1.05);
+}
+
+/* === Успешное сообщение === */
+.success-message {
+  background: linear-gradient(to right, #4CAF50, #66bb6a);
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+  animation: fadeInUp 0.6s ease;
+}
+
+/* === Анимации === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,138 @@
+.main{
+  min-height: calc(100vh - 230px);
+  margin: 0;
+  padding: 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 2.5rem 0 2rem;
+  color: #1a252f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  justify-content: space-between;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0.4rem 0;
+  color: #1a252f;
+  text-align: center;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin: 0.4rem 0;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.card .price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0fe995;
+  margin: 0.6rem 0;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  padding: 5px;
+}
+
+.favorite-btn .material-icons,
+.favorite-btn mat-icon {
+  font-size: 24px;
+  color: red;
+  transition: color 0.3s ease;
+}
+
+.favorite-btn:hover .material-icons,
+.favorite-btn:hover mat-icon {
+  color: #ff4d4f;
+}
+
+.favorite-btn .material-icons.favorite,
+.favorite-btn mat-icon.favorite {
+  color: #ff4d4f;
+}
+
+.cart-btn {
+  background-color: #0fe995;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0.6rem 0;
+}
+
+.cart-btn:hover {
+  background-color: #0ad185;
+  transform: scale(1.03);
+}
+
+.cart-btn:active {
+  transform: scale(0.98);
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #1a252f;
+  margin: 2.5rem 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 1rem;
+  }
+
+  .card img {
+    height: 160px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 0.8rem;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+  }
+
+  .cart-btn {
+    font-size: 0.95rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
